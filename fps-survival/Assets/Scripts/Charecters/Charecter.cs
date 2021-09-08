@@ -77,7 +77,6 @@ public abstract class Charecter : MonoBehaviour
     protected virtual void SetCharecterDefaultStats()
     {
         _maxHealth = charecterData.healthMax;
-        _moveSpeed = charecterData.moveSpeed;
         _healthCurrent = _maxHealth;
     }
 }
