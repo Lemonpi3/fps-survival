@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 59199943}
   - component: {fileID: 59199942}
   - component: {fileID: 59199941}
-  - component: {fileID: 59199944}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -189,7 +188,7 @@ MonoBehaviour:
     - TestWorld
     AllowRuntimeSceneChanges: 0
     NetworkPrefabs:
-    - Prefab: {fileID: 3513008791461394099, guid: 9a8c0aee436c6c443a1f7262c7f1ed96, type: 3}
+    - Prefab: {fileID: 1991961731456349485, guid: 9a8c0aee436c6c443a1f7262c7f1ed96, type: 3}
       PlayerPrefab: 1
     PlayerPrefabHash:
       id: 0
@@ -235,18 +234,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &59199944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 59199940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fb7a1c219989574da2d0c937cdd6d6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1377745522
 GameObject:
   m_ObjectHideFlags: 0

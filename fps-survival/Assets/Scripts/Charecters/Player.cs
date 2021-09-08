@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Player : Charecter
 {
@@ -9,20 +10,14 @@ public class Player : Charecter
     [SerializeField]
     private Weapon[] weapons;
 
-    [SerializeField]
-    GroundCheck groundCheck;
-    [SerializeField]
-    float jumpForce;
-
-    Vector3 direction;
-    Rigidbody rb;
-    
+    private PlayerNetwork playerNetwork;
 
     protected override void Start()
     {
         base.Start();
-        rb = GetComponent<Rigidbody>();
         LoadWeapons();
+        
+        playerNetwork = GetComponent<PlayerNetwork>();
     }
 
     protected override void Update()
@@ -31,10 +26,6 @@ public class Player : Charecter
         GetInputs();
     }
 
-    protected override void FixedUpdate()
-    {
-        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-    }
 
     protected override void SetCharecterDefaultStats()
     {
@@ -56,28 +47,10 @@ public class Player : Charecter
         base.TakeDamage(amount);
     }
 
-    protected override void Move(Vector3 direction)
-    {
-        rb.velocity = new Vector3(direction.x * _moveSpeed,rb.velocity.y,direction.z * _moveSpeed);
-    }
-
-    private void Jump()
-    {
-        rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
-    }
+    
 
     private void GetInputs()
     {
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-        {
-            Move(direction);
-        }
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            Jump();
-        }
-
         if(Input.mouseScrollDelta.y > 0)
         {
             SwapWeapons(currentWeapon + 1);
@@ -86,6 +59,11 @@ public class Player : Charecter
         if (Input.mouseScrollDelta.y < 0)
         {
             SwapWeapons(currentWeapon - 1);
+        }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+           Debug.Log(playerNetwork.GetRaycastHit());
         }
     }
 
@@ -105,7 +83,10 @@ public class Player : Charecter
         {
             currentWeapon = newSlot;
         }
-        Debug.Log(currentWeapon);
+        if (weapons[currentWeapon] == null)
+        {
+            currentWeapon = 0;
+        }
         weapons[currentWeapon].gameObject.SetActive(true);
     }
 

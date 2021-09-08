@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Charecter : MonoBehaviour
 {
     [SerializeField]
-    private CharecterData charecterData;
+    protected CharecterData charecterData;
 
     public int healthCurrent
     {
@@ -31,8 +31,10 @@ public abstract class Charecter : MonoBehaviour
 
     [SerializeField]
     protected int _maxHealth;
+
     [SerializeField]
     protected int _healthCurrent;
+    
     [SerializeField]
     protected float _moveSpeed;
 
@@ -76,5 +78,6 @@ public abstract class Charecter : MonoBehaviour
     {
         _maxHealth = charecterData.healthMax;
         _moveSpeed = charecterData.moveSpeed;
+        _healthCurrent = _maxHealth;
     }
 }
