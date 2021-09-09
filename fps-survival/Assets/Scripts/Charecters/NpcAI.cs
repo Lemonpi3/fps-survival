@@ -46,6 +46,7 @@ public abstract class NpcAI : MonoBehaviour
     protected virtual void MoveToPos(Vector3 targetPos)
     {
         agent.SetDestination(targetPos);
+        FaceTarget(targetPos);
     }
 
     /// <summary>
@@ -81,6 +82,19 @@ public abstract class NpcAI : MonoBehaviour
         roamRange = npcData.roamRange;
 
         startingPos = transform.position;
+    }
+
+    protected void FaceTarget(Vector3 targetPos)
+    {
+
+        Vector3 direction = (targetPos - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        if (lookRotation == Quaternion.LookRotation(new Vector3(0f, 0f, 0f)))
+        {
+            transform.rotation = transform.rotation;
+        }
+        else
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
     protected void OnTriggerEnter(Collider other)

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAI : NpcAI
@@ -17,6 +15,12 @@ public class EnemyAI : NpcAI
         base.Start();
         enemy = GetComponent<Enemy>();
         InvokeRepeating("StateMachine", 0, aiTickTime);
+
+        if(target != null)
+        {
+            MoveToPos(target.transform.position);
+            targetChar = target.GetComponent<Charecter>();
+        }
     }
 
     /// <summary>
@@ -71,7 +75,15 @@ public class EnemyAI : NpcAI
                 } 
                 else 
                 {
+                    agent.isStopped = true; //stops to attack
+
+                    FaceTarget(target.transform.position);
                     //Enemy.Attack(targetChar);
+
+                    if (CalculateDistance(transform.position, target.transform.position) > stopRange) // if out of range chases
+                    {
+                        MoveToPos(target.transform.position);
+                    }
                 }
                 break;
             
