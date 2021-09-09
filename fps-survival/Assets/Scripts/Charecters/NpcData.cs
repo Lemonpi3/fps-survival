@@ -12,6 +12,10 @@ public class NpcData : CharecterData
     private Mesh _npcMesh;
     public Mesh npcMesh => _npcMesh;
 
+    [SerializeField]
+    private bool _canRoam;
+    public bool canRoam => _canRoam;
+
     [Header("Npc stats")]
     [SerializeField]
     private float _moveSpeed = 8f;

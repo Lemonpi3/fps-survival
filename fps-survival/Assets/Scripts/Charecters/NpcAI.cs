@@ -12,11 +12,16 @@ public abstract class NpcAI : MonoBehaviour
 
     [SerializeField]
     protected float aiTickTime; //how often will the state machine refresh
+
     [SerializeField]
     protected float sightRange;
 
     [SerializeField]
     protected float stopRange; //is also attackRange for enemyAI
+
+    [SerializeField]
+    protected bool canRoam;
+
     [SerializeField]
     protected float roamRange;
 
@@ -25,9 +30,9 @@ public abstract class NpcAI : MonoBehaviour
     private SphereCollider antiBumpCollider; //to prevent the ai bumping while trying to reach the center of big targets with an OnTriggerEnter
     private bool bumpingWithTarget;  //the bool is to control the NpcAI state (specific to their respective AIs (VillagerAI,EnemyAI , etc))
     
-    NavMeshAgent agent;
+    protected NavMeshAgent agent;
 
-    protected void Start()
+    protected virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         antiBumpCollider = GetComponent<SphereCollider>();
@@ -38,7 +43,7 @@ public abstract class NpcAI : MonoBehaviour
         return Vector3.Distance(pos1,pos2);
     }
 
-    protected void MoveToPos(Vector3 targetPos)
+    protected virtual void MoveToPos(Vector3 targetPos)
     {
         agent.SetDestination(targetPos);
     }
@@ -54,9 +59,17 @@ public abstract class NpcAI : MonoBehaviour
 
         if (CalculateDistance(startingPos, roamPos) > roamRange )
         {
-            MoveToPos(startingPos);
+            agent.SetDestination(startingPos);
         }
-        else MoveToPos(roamPos);
+        else agent.SetDestination(roamPos);
+    }
+
+    protected void Roam()
+    {
+        if (agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathComplete)
+        {
+            GoToRandomRoamPos();
+        }
     }
 
     protected virtual void SetupAgent()

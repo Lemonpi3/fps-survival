@@ -7,6 +7,8 @@ public abstract class Charecter : MonoBehaviour
     [SerializeField]
     protected CharecterData charecterData;
 
+    public Team team;
+
     public int healthCurrent
     {
         get => _healthCurrent;
@@ -78,5 +80,6 @@ public abstract class Charecter : MonoBehaviour
     {
         _maxHealth = charecterData.healthMax;
         _healthCurrent = _maxHealth;
+        team = charecterData.team;
     }
 }
