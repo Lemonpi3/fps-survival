@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New NPC", menuName = "Create Charecter/New NPC")]
@@ -10,6 +8,10 @@ public class NpcData : CharecterData
     private NPC_TYPE _npc_type;
     public NPC_TYPE npc_type => _npc_type;
 
+    [SerializeField]
+    private Mesh _npcMesh;
+    public Mesh npcMesh => _npcMesh;
+
     [Header("Npc stats")]
     [SerializeField]
     private float _moveSpeed = 8f;
@@ -19,6 +21,10 @@ public class NpcData : CharecterData
     private float _roamRange;
     public float roamRange => _roamRange;
 
+    [SerializeField]
+    private float _attackRange;
+    public float attackRange => _attackRange; //also counts as stop range for passive npcs
+
     [Header("Enemy Stats")]
     [SerializeField]
     private int _damage;
@@ -27,10 +33,6 @@ public class NpcData : CharecterData
     [SerializeField]
     private float _attackSpeed;
     public float attackSpeed => _attackSpeed;
-
-    [SerializeField]
-    private float _attackRange;
-    public float attackRange => _attackRange;
 
     [SerializeField]
     private float _sightRange;
