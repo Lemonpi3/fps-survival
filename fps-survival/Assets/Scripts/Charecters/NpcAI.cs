@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +9,7 @@ public abstract class NpcAI : MonoBehaviour
     public NpcData npcData;
 
     [SerializeField]
-    protected float aiTickTime; //how often will the state machine refresh
+    protected float aiTickTime = 0.3f; //how often will the state machine refresh
 
     [SerializeField]
     protected float sightRange;
@@ -25,17 +23,19 @@ public abstract class NpcAI : MonoBehaviour
     [SerializeField]
     protected float roamRange;
 
+    protected Team team;
     protected Vector3 startingPos;
 
     private SphereCollider antiBumpCollider; //to prevent the ai bumping while trying to reach the center of big targets with an OnTriggerEnter
-    private bool bumpingWithTarget;  //the bool is to control the NpcAI state (specific to their respective AIs (VillagerAI,EnemyAI , etc))
+    protected bool bumpingWithTarget;  //the bool is to control the NpcAI state (specific to their respective AIs (VillagerAI,EnemyAI , etc))
     
     protected NavMeshAgent agent;
-
+    
     protected virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         antiBumpCollider = GetComponent<SphereCollider>();
+        SetupAgent();
     }
 
     protected float CalculateDistance(Vector3 pos1, Vector3 pos2)
@@ -54,10 +54,11 @@ public abstract class NpcAI : MonoBehaviour
     /// </summary>
     protected void GoToRandomRoamPos()
     {
-        float x = Random.Range(-roamRange, roamRange);
-        float z = Random.Range(-roamRange, roamRange);
-        Vector3 roamPos = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
+        float x = Random.Range(transform.position.x - roamRange, transform.position.x + roamRange);
+        float z = Random.Range(transform.position.z - roamRange, transform.position.z + roamRange);
 
+        Vector3 roamPos = new Vector3(x, transform.position.y, z);
+        
         if (CalculateDistance(startingPos, roamPos) > roamRange )
         {
             agent.SetDestination(startingPos);
@@ -67,7 +68,7 @@ public abstract class NpcAI : MonoBehaviour
 
     protected void Roam()
     {
-        if (agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathComplete)
+        if (agent.pathStatus == NavMeshPathStatus.PathComplete)
         {
             GoToRandomRoamPos();
         }
@@ -82,6 +83,7 @@ public abstract class NpcAI : MonoBehaviour
         roamRange = npcData.roamRange;
 
         startingPos = transform.position;
+        team = npcData.team;
     }
 
     protected void FaceTarget(Vector3 targetPos)
@@ -117,7 +119,10 @@ public abstract class NpcAI : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, sightRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(startingPos,roamRange);
     }
+    
 }
 
 

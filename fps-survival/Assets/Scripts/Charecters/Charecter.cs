@@ -25,7 +25,6 @@ public abstract class Charecter : MonoBehaviour
             }
             else
             {
-                healthCurrent = value;
                 _healthCurrent = value;
             }
         }
@@ -43,6 +42,7 @@ public abstract class Charecter : MonoBehaviour
     protected virtual void Start()
     {
         SetCharecterDefaultStats();
+        gameObject.tag = charecterData.team.ToString();
     }
 
     protected virtual void Update()
@@ -60,14 +60,18 @@ public abstract class Charecter : MonoBehaviour
 
     }
 
-    protected virtual void Heal(int amount)
+    public virtual void Heal(int amount)
     {
         healthCurrent += amount;
     }
 
-    protected virtual void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount)
     {
         healthCurrent -= amount;
+        if(healthCurrent <= 0)
+        {
+            Die();
+        }
     }
 
     protected virtual void Die()
@@ -81,5 +85,15 @@ public abstract class Charecter : MonoBehaviour
         _maxHealth = charecterData.healthMax;
         _healthCurrent = _maxHealth;
         team = charecterData.team;
+    }
+
+    protected virtual void DropLoot()
+    {
+
+    }
+
+    protected virtual void ChangeTeam(Team newTeam)
+    {
+        team = newTeam;
     }
 }

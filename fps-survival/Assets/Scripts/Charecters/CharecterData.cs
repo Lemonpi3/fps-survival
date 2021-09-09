@@ -14,7 +14,7 @@ public class CharecterData : ScriptableObject
 
     [Header("Shared stats")]
     [SerializeField]
-    private int _healthMax;
+    private int _healthMax = 1;
     public int healthMax => _healthMax;
 }
 /// <summary>

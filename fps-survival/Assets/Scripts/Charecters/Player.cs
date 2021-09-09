@@ -37,12 +37,12 @@ public class Player : Charecter
         base.Die();
     }
 
-    protected override void Heal(int amount)
+    public override void Heal(int amount)
     {
         base.Heal(amount);
     }
 
-    protected override void TakeDamage(int amount)
+    public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
     }
