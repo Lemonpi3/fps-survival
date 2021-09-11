@@ -158,6 +158,7 @@ MonoBehaviour:
   - {fileID: 5636499653467556857}
   - {fileID: 614779463306641280}
   - {fileID: 1763027672966532885}
+  weaponsParent: {fileID: 3021995930940413164}
 --- !u!1 &1991961731456349487
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +172,7 @@ GameObject:
   - component: {fileID: 1991961731460148011}
   - component: {fileID: 1991961731447680323}
   - component: {fileID: 1991961731456349480}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -327,7 +328,7 @@ GameObject:
   - component: {fileID: 3300342864499101779}
   - component: {fileID: 3300342864499101776}
   - component: {fileID: 3300342864499101777}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3079679668309185309}
   - component: {fileID: 1763027672966532885}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Weapon (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,6 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88ae157a1c066646a8cad2626651b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weapon: {fileID: 0}
 --- !u!1 &4454407793036772170
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,7 +452,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5729538691873428093}
   - component: {fileID: 614779463306641280}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Weapon (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,6 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88ae157a1c066646a8cad2626651b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weapon: {fileID: 0}
 --- !u!1 &7447068713743521432
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +496,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8527769083571552785}
   - component: {fileID: 5636499653467556857}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -526,3 +529,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88ae157a1c066646a8cad2626651b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weapon: {fileID: 11400000, guid: 4ce7c9531f000e548a3232b96f6db5b9, type: 2}

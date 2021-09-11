@@ -7,9 +7,14 @@ public class Player : Charecter
 {
     [SerializeField]
     private int currentWeapon = 0;
+    
     [SerializeField]
     private Weapon[] weapons;
 
+    [SerializeField]
+    private GameObject weaponsParent;
+
+    Camera cam;
     protected override void Start()
     {
         base.Start();
@@ -18,7 +23,9 @@ public class Player : Charecter
         {
             GetComponent<RigidbodyFirstPersonController>().enabled = false;
             Destroy(transform.Find("Camera").gameObject);
+            return;
         }*/
+        cam = GetComponentInChildren<Camera>();
     }
 
     protected override void Update()
@@ -62,9 +69,14 @@ public class Player : Charecter
             SwapWeapons(currentWeapon - 1);
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
-            Debug.Log(GetRaycastHit());
+            weapons[currentWeapon].Shoot(cam);
+        }
+
+        if (Input.GetButton("Fire2"))
+        {
+            weapons[currentWeapon].Shoot(cam,true);
         }
     }
 
@@ -93,6 +105,8 @@ public class Player : Charecter
 
     private void LoadWeapons()
     {
+        weaponsParent.tag = team.ToString();
+
         for (int i = 0; i < weapons.Length; i++)
         {
             weapons[i].gameObject.SetActive(false);
