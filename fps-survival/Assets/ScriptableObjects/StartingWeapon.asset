@@ -32,10 +32,10 @@ MonoBehaviour:
   _mainDamageToResources: 1
   _altAttackMask:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 256
   _isAltLaser: 0
   _altDamage: 1
-  _altAttackSpeed: 0
+  _altAttackSpeed: 1
   _altProyectile: {fileID: 0}
   _altProyectileSpeed: 0
   _altLaser: {fileID: 0}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Villager
   m_EditorClassIdentifier: 
   _charecterName: 
-  _team: 0
+  _team: 1
   _healthMax: 100000000
   _npc_type: 0
   _npcMesh: {fileID: 0}

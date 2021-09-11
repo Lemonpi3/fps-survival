@@ -19,7 +19,7 @@ public class WeaponData : ScriptableObject
 
     [SerializeField]
     private bool _usesAmmo;
-    public bool usesAmmo => usesAmmo;
+    public bool usesAmmo => _usesAmmo;
 
     [SerializeField]
     private int _ammoCapacity;

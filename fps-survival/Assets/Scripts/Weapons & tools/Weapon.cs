@@ -74,18 +74,26 @@ public class Weapon : MonoBehaviour
 
     private void DamageTarget(Collider target,bool altfire = false)
     {
+        Charecter _target = target.GetComponent<Charecter>();
+
         if (!altfire)
         {
             mainFireTimer -= Time.deltaTime;
             if (mainFireTimer <= 0)
             {
-                if(target.tag != "Resource")
+                if (target.tag != "Resource" && _target != null)
                 {
-                    target.GetComponent<Charecter>().TakeDamage(mainDamage);
+                    Debug.Log(mainDamage);
+                    
+                    _target.TakeDamage(mainDamage);
+                    
                 }
                 else
                 {
-
+                    if (target.tag == "Resource")
+                    {
+                        Debug.Log(target.GetComponent<Resource>().GatherResource(mainGatherType, mainGatherTier, mainDamageToResource));
+                    }
                 }
                 mainFireTimer = mainAttackSpeed;
             }
@@ -95,11 +103,23 @@ public class Weapon : MonoBehaviour
             altFireTimer -= Time.deltaTime;
             if (altFireTimer <= 0)
             {
-                target.GetComponent<Charecter>().TakeDamage(altDamage);
+                if (target.tag != "Resource" && _target != null)
+                {
+                    _target.TakeDamage(altDamage);
+                }
+                else 
+                {
+                    if (target.tag == "Resource")
+                    {
+                        Debug.Log(target.GetComponent<Resource>().GatherResource(altGatherType, altGatherTier, altDamageToResource));
+                    }
+                        
+                }
                 altFireTimer = altAttackSpeed;
             }
         }
     }
+
 
     private IEnumerator Reload()
     {
