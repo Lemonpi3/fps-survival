@@ -18,15 +18,15 @@ MonoBehaviour:
   _npc_type: 1
   _npcMesh: {fileID: 0}
   _canRoam: 1
+  _dropsLoot: 0
   _moveSpeed: 8
   _roamRange: 10
   _attackRange: 3
   _sightRange: 10
-  enemyStats:
-    _attack_TYPE: 0
-    _damage: 1
-    _attackSpeed: 1
-    _rangedProyectile: {fileID: 0}
+  _attack_TYPE: 0
+  _damage: 1
+  _attackSpeed: 1
+  _rangedProyectile: {fileID: 0}
   _commonLoot: []
   _uncommonLoot: []
   _rareLoot: []

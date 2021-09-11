@@ -35,9 +35,9 @@ public class Enemy : Charecter
         attack_TYPE = npcData.attack_TYPE;
     }
 
-    public void Attacking(Charecter target)
+    public void Attacking(Charecter target,float aiTickTime)
     {
-        timer -= Time.deltaTime;
+        timer -= Time.deltaTime * aiTickTime * 100;
         if (timer <= 0)
         {
             Attack(target);

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,7 +24,11 @@ public abstract class NpcAI : MonoBehaviour
 
     [SerializeField]
     protected float roamRange;
+    [SerializeField]
+    protected float roamTimeInterval = 30f;
 
+    protected float distanceToTar;
+    protected float roamTimer;
     protected Team team;
     protected Vector3 startingPos;
 
@@ -34,8 +40,16 @@ public abstract class NpcAI : MonoBehaviour
     protected virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        antiBumpCollider = GetComponent<SphereCollider>();
+        antiBumpCollider = GetComponentInChildren<SphereCollider>();
         SetupAgent();
+    }
+
+    protected void FixedUpdate()
+    {
+        if (target != null)
+        {
+            distanceToTar = Vector3.Distance(transform.position, target.transform.position);
+        }
     }
 
     protected float CalculateDistance(Vector3 pos1, Vector3 pos2)
@@ -54,23 +68,29 @@ public abstract class NpcAI : MonoBehaviour
     /// </summary>
     protected void GoToRandomRoamPos()
     {
-        float x = Random.Range(transform.position.x - roamRange, transform.position.x + roamRange);
-        float z = Random.Range(transform.position.z - roamRange, transform.position.z + roamRange);
+        float x = Random.Range(startingPos.x - roamRange, startingPos.x + roamRange);
+        float z = Random.Range(startingPos.z - roamRange, startingPos.z + roamRange);
 
-        Vector3 roamPos = new Vector3(x, transform.position.y, z);
+        Vector3 roamPos = new Vector3(x , transform.position.y, z);
         
-        if (CalculateDistance(startingPos, roamPos) > roamRange )
-        {
-            agent.SetDestination(startingPos);
-        }
-        else agent.SetDestination(roamPos);
+       agent.SetDestination(roamPos);
     }
 
     protected void Roam()
     {
-        if (agent.pathStatus == NavMeshPathStatus.PathComplete)
+        roamTimer -= Time.deltaTime * aiTickTime * 100;
+        if (roamTimer <= 0)
         {
-            GoToRandomRoamPos();
+            Debug.Log("Roaming");
+            if (CalculateDistance(startingPos, transform.position) > roamRange)
+            {
+                agent.SetDestination(startingPos);
+            }
+            else
+            {
+                GoToRandomRoamPos();
+            }
+            roamTimer = roamTimeInterval;
         }
     }
 
@@ -80,7 +100,9 @@ public abstract class NpcAI : MonoBehaviour
 
         sightRange = npcData.sightRange;
         stopRange = npcData.attackRange;
+
         roamRange = npcData.roamRange;
+        canRoam = npcData.canRoam;
 
         startingPos = transform.position;
         team = npcData.team;
@@ -88,15 +110,15 @@ public abstract class NpcAI : MonoBehaviour
 
     protected void FaceTarget(Vector3 targetPos)
     {
-
-        Vector3 direction = (targetPos - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        if (lookRotation == Quaternion.LookRotation(new Vector3(0f, 0f, 0f)))
+        Vector3 direction = new Vector3(targetPos.x - transform.position.x,0,targetPos.z-transform.position.z).normalized;
+        
+        if (direction != Vector3.zero)
         {
-            transform.rotation = transform.rotation;
-        }
-        else
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
+        else 
+            transform.rotation = transform.rotation;
     }
 
     protected void OnTriggerEnter(Collider other)

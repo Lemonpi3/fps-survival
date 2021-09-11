@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 public class EnemyAI : NpcAI
 {
@@ -17,11 +19,11 @@ public class EnemyAI : NpcAI
         InvokeRepeating("StateMachine", 0, aiTickTime);
         if (canRoam)
         {
-            aistate = AIstate.Idle;
+            aistate = AIstate.Roaming;
         }
         if(target != null)  //if it has ,goes chases a default target 
         {
-            MoveToPos(target.transform.position);
+            aistate = AIstate.Moveing;
             if(target.GetComponent<Charecter>() != null)
             {
                 targetChar = target.GetComponent<Charecter>();
@@ -37,56 +39,64 @@ public class EnemyAI : NpcAI
         switch (aistate)
         {
             case AIstate.Idle:
+                if (target != null)
+                {
+                    aistate = AIstate.Moveing;
+                }
+                else UpdateTarget();
 
-                UpdateTarget();
-                agent.isStopped = true;
                 break;
 
             case AIstate.Moveing:
 
                 StopBumping();
-
-                if (target != null && CalculateDistance(transform.position, target.transform.position) <= sightRange)
+                if (distanceToTar <= sightRange && target != null)
                 {
-                    agent.Move(target.transform.position); //chase target
-
-                    if (CalculateDistance(transform.position, target.transform.position) <= stopRange && targetChar != null) //if its in attackRange checks if it can be attacked
+                    agent.SetDestination(target.transform.position);
+                    if (distanceToTar <= stopRange)
                     {
                         if (targetChar.team != team || targetChar.team != Team.Friendly || targetChar.team != Team.Neutral)
                         {
-                            aistate = AIstate.Attacking;
+                            {
+                                 aistate = AIstate.Attacking;
+                            }
                         }
                     }
                 }
-                GoToDefaultState();
+                else
+                {
+                    target = null;
+                    GoToDefaultState();
+                }
                 break;
 
             case AIstate.Roaming:
-
-                Roam();
-                UpdateTarget();
-
-                break;
-            case AIstate.Attacking:
-
-                if(target == null || CalculateDistance(transform.position,target.transform.position) > sightRange && !bumpingWithTarget) //checks if target is destroyed or if target is too far away
+                
+                if (target == null)
                 {
-                    GoToDefaultState();
-                } 
-                else 
+                    UpdateTarget();
+                    Roam();
+                }
+                else
                 {
-                    agent.isStopped = true; //stops to attack
-
-                    FaceTarget(target.transform.position);
-                    enemy.Attacking(targetChar);
-
-                    if (CalculateDistance(transform.position, target.transform.position) > stopRange) // if out of range chases
-                    {
-                        MoveToPos(target.transform.position);
-                    }
+                    aistate = AIstate.Moveing;
                 }
                 break;
-            
+
+            case AIstate.Attacking:
+
+                agent.SetDestination(transform.position);
+                FaceTarget(target.transform.position);
+                enemy.Attacking(targetChar,aiTickTime);
+
+                if (distanceToTar > stopRange && !bumpingWithTarget) // if out of range chases
+                {
+                    aistate = AIstate.Moveing;
+                }
+                break;
+            default:
+                break;
+
         }
     }
 
@@ -95,11 +105,14 @@ public class EnemyAI : NpcAI
     /// </summary>
     private void UpdateTarget()
     {
+        if(target != null) { MoveToPos(target.transform.position);  }
+
         Charecter[] charecters = FindObjectsOfType<Charecter>();
+
         float shortestDistance = Mathf.Infinity;
-        
         foreach (Charecter charecter in charecters)
         {
+            
             if (charecter.tag != gameObject.tag || charecter.tag !="Friendly" || charecter.tag != "Neutral" && charecter.team != team) 
             {
                 float distanceToEnemy = CalculateDistance(transform.position, charecter.transform.position);
@@ -114,19 +127,15 @@ public class EnemyAI : NpcAI
                     {
                         target = charecter.gameObject;
                         targetChar = charecter;
-                        MoveToPos(target.transform.position);
+                        aistate = AIstate.Moveing;
                     }
-                    else GoToDefaultState();
                 } 
             }
+            else GoToDefaultState();
         }
     }
 
-    protected override void MoveToPos(Vector3 targetPos)
-    {
-        aistate = AIstate.Moveing;
-        base.MoveToPos(targetPos);
-    }
+    
 
     /// <summary>
     /// if its bumping with the target and can attack it it will switch to attacking else goes to default state
@@ -149,11 +158,13 @@ public class EnemyAI : NpcAI
     /// </summary>
     private void GoToDefaultState()
     {
-        target = null;
+        if(target != null) { return; }
+
         if (canRoam)
         {
             aistate = AIstate.Roaming;
         }
         else aistate = AIstate.Idle;
     }
+   
 }

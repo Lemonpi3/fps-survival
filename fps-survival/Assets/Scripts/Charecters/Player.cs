@@ -10,14 +10,15 @@ public class Player : Charecter
     [SerializeField]
     private Weapon[] weapons;
 
-    private PlayerNetwork playerNetwork;
-
     protected override void Start()
     {
         base.Start();
         LoadWeapons();
-        
-        playerNetwork = GetComponent<PlayerNetwork>();
+        /*if (!IsLocalPlayer)
+        {
+            GetComponent<RigidbodyFirstPersonController>().enabled = false;
+            Destroy(transform.Find("Camera").gameObject);
+        }*/
     }
 
     protected override void Update()
@@ -47,11 +48,11 @@ public class Player : Charecter
         base.TakeDamage(amount);
     }
 
-    
+
 
     private void GetInputs()
     {
-        if(Input.mouseScrollDelta.y > 0)
+        if (Input.mouseScrollDelta.y > 0)
         {
             SwapWeapons(currentWeapon + 1);
         }
@@ -63,7 +64,7 @@ public class Player : Charecter
 
         if (Input.GetButtonDown("Fire1"))
         {
-           Debug.Log(playerNetwork.GetRaycastHit());
+            Debug.Log(GetRaycastHit());
         }
     }
 
@@ -71,11 +72,11 @@ public class Player : Charecter
     {
         weapons[currentWeapon].gameObject.SetActive(false);
 
-        if(newSlot >= weapons.Length)
+        if (newSlot >= weapons.Length)
         {
             currentWeapon = 0;
         }
-        else if(newSlot < 0)
+        else if (newSlot < 0)
         {
             currentWeapon = weapons.Length - 1;
         }
@@ -98,5 +99,18 @@ public class Player : Charecter
         }
 
         SwapWeapons(currentWeapon);
+    }
+
+    public Collider GetRaycastHit()
+    {
+        Camera cam = GetComponentInChildren<Camera>();
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            return hit.collider;
+        }
+        else return null;
     }
 }

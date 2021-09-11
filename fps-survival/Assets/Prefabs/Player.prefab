@@ -13,10 +13,7 @@ GameObject:
   - component: {fileID: 1991961731453073035}
   - component: {fileID: 1991961731446653135}
   - component: {fileID: 1991961731456349481}
-  - component: {fileID: 1991961731456349486}
-  - component: {fileID: 1991961731456349484}
-  - component: {fileID: -8869052672022903331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charecterData: {fileID: 11400000, guid: f0999cd67fa93d647b523a86fef71342, type: 2}
+  team: 0
   _maxHealth: 0
   _healthCurrent: 0
   _moveSpeed: 0
@@ -160,83 +158,6 @@ MonoBehaviour:
   - {fileID: 5636499653467556857}
   - {fileID: 614779463306641280}
   - {fileID: 1763027672966532885}
---- !u!114 &1991961731456349486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1991961731456349485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NetworkInstanceId: 0
-  PrefabHash: 1897319656204293034
-  PrefabHashGenerator: Player
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
---- !u!114 &1991961731456349484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1991961731456349485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FixedSendsPerSecond: 20
-  AssumeSyncedSends: 1
-  InterpolatePosition: 1
-  SnapDistance: 10
-  InterpolateServer: 1
-  MinMeters: 0.15
-  MinDegrees: 1.5
-  ExtrapolatePosition: 0
-  MaxSendsToExtrapolate: 5
-  Channel: 
-  EnableRange: 0
-  EnableNonProvokedResendChecks: 0
-  DistanceSendrate:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 20
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 500
-      value: 20
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &-8869052672022903331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1991961731456349485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb02c92d1ea21dd40ab83e6b438f3b47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1991961731456349487
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,7 +171,7 @@ GameObject:
   - component: {fileID: 1991961731460148011}
   - component: {fileID: 1991961731447680323}
   - component: {fileID: 1991961731456349480}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -371,7 +292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3412818285257772835}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +327,7 @@ GameObject:
   - component: {fileID: 3300342864499101779}
   - component: {fileID: 3300342864499101776}
   - component: {fileID: 3300342864499101777}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +407,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3079679668309185309}
   - component: {fileID: 1763027672966532885}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Weapon (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5729538691873428093}
   - component: {fileID: 614779463306641280}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Weapon (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,7 +493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8527769083571552785}
   - component: {fileID: 5636499653467556857}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
