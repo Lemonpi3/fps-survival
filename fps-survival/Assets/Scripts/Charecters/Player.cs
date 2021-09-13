@@ -78,6 +78,11 @@ public class Player : Charecter
         {
             weapons[currentWeapon].Shoot(cam,true);
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+           StartCoroutine(weapons[currentWeapon].Reload());
+        }
     }
 
     private void SwapWeapons(int newSlot)

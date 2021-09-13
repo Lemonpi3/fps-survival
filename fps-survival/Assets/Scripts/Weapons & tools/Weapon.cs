@@ -11,8 +11,8 @@ public class Weapon : MonoBehaviour
     private Transform bulletSpawnPoint;
 
     private bool hasAltFire;
-
     private bool infiniteAmmo;
+
     private int ammoCapacity;
     private int currentAmmo;
     private float reloadTime;
@@ -39,36 +39,87 @@ public class Weapon : MonoBehaviour
     private GameObject altProyectile;
     private float altProyectileSpeed;
     private LayerMask altAttackMask;
-
+    
     private Resource_Type altGatherType;
     private int altGatherTier;
     private int altDamageToResource;
     private float altFireTimer;
 
+    bool shootingMain;
+    bool shootingAlt;
+    bool reloading;
+
     private void Start()
     {
         LoadWeapon();
     }
+    public void Update()
+    {
+        if (shootingMain)
+        {
+            mainFireTimer -= Time.deltaTime;
+            if(mainFireTimer <= 0)
+            {
+                shootingMain = false;
+            }
+        }
 
+        if (shootingAlt)
+        {
+            altFireTimer -= Time.deltaTime;
+            if (altFireTimer <= 0)
+            {
+                shootingAlt = false;
+            }
+        }
+
+        if (currentAmmo <= 0 && !infiniteAmmo && !reloading)
+        {
+            StartCoroutine(Reload());
+            reloading = true;
+        }
+    }
     public void Shoot(Camera cam,bool altFire = false)
     {
-        if(currentAmmo < 0 && !infiniteAmmo)
+        if(currentAmmo <= 0)
         {
-            Reload();
             return;
         }
 
         RaycastHit _hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, mainAttackMask)&& !altFire)
+
+        if (!altFire)
         {
-            if(_hit.collider.tag != gameObject.tag)
+            shootingMain = true;
+
+            if (mainFireTimer <= 0)
             {
-                DamageTarget(_hit.collider);
+                currentAmmo -= 1;
+                
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, mainAttackMask))
+                {
+                    if (_hit.collider.tag != gameObject.tag)
+                    {
+                        DamageTarget(_hit.collider);
+                    }
+                }
+                mainFireTimer = mainAttackSpeed;
             }
         }
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, altAttackMask) && altFire)
+        else
         {
-            DamageTarget(_hit.collider,true);
+            shootingAlt = true;
+
+            if (altFireTimer <= 0)
+            {
+                currentAmmo -= 1;
+
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, altAttackMask))
+                {
+                    DamageTarget(_hit.collider, true);
+                }
+                altFireTimer = altAttackSpeed;
+            }
         }
     }
 
@@ -78,54 +129,39 @@ public class Weapon : MonoBehaviour
 
         if (!altfire)
         {
-            mainFireTimer -= Time.deltaTime;
-            if (mainFireTimer <= 0)
+            if (target.tag != "Resource" && _target != null)
             {
-                if (target.tag != "Resource" && _target != null)
-                {
-                    Debug.Log(mainDamage);
+                Debug.Log(mainDamage);
                     
-                    _target.TakeDamage(mainDamage);
+                _target.TakeDamage(mainDamage);
                     
-                }
-                else
-                {
-                    if (target.tag == "Resource")
-                    {
-                        Debug.Log(target.GetComponent<Resource>().GatherResource(mainGatherType, mainGatherTier, mainDamageToResource));
-                    }
-                }
-                mainFireTimer = mainAttackSpeed;
+            }
+            else if(target.tag == "Resource")
+            {
+                Debug.Log(target.GetComponent<Resource>().GatherResource(mainGatherType, mainGatherTier, mainDamageToResource));
             }
         }
         else
         {
-            altFireTimer -= Time.deltaTime;
-            if (altFireTimer <= 0)
+            if (target.tag != "Resource" && _target != null)
             {
-                if (target.tag != "Resource" && _target != null)
-                {
-                    _target.TakeDamage(altDamage);
-                }
-                else 
-                {
-                    if (target.tag == "Resource")
-                    {
-                        Debug.Log(target.GetComponent<Resource>().GatherResource(altGatherType, altGatherTier, altDamageToResource));
-                    }
-                        
-                }
-                altFireTimer = altAttackSpeed;
+                _target.TakeDamage(altDamage);
+            }
+
+            else if (target.tag == "Resource")
+            {
+                Debug.Log(target.GetComponent<Resource>().GatherResource(altGatherType, altGatherTier, altDamageToResource));
             }
         }
     }
 
 
-    private IEnumerator Reload()
+    public IEnumerator Reload()
     {
         Debug.Log("Reloading");
         yield return new WaitForSeconds(reloadTime);
         currentAmmo = ammoCapacity;
+        reloading = false;
         Debug.Log("Reloaded!");
     }
 
@@ -138,6 +174,7 @@ public class Weapon : MonoBehaviour
         {
             ammoCapacity = _weapon.ammoCapacity;
             currentAmmo = ammoCapacity;
+            reloadTime = _weapon.reloadTime;
         }
         //main fire setup
         mainDamage = _weapon.mainDamage;

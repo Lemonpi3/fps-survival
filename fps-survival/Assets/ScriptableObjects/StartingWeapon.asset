@@ -15,9 +15,9 @@ MonoBehaviour:
   _weaponName: MultyTool
   _mesh: {fileID: 0}
   _hasAltFire: 1
-  _usesAmmo: 0
-  _ammoCapacity: 0
-  _reloadTime: 0
+  _usesAmmo: 1
+  _ammoCapacity: 2
+  _reloadTime: 2
   _mainAttackMask:
     serializedVersion: 2
     m_Bits: 64
