@@ -55,6 +55,8 @@ public class Weapon : MonoBehaviour
     }
     public void Update()
     {
+        if(_weapon == null) { return; }
+
         if (shootingMain)
         {
             mainFireTimer -= Time.deltaTime;
@@ -73,7 +75,7 @@ public class Weapon : MonoBehaviour
             }
         }
 
-        if (currentAmmo <= 0 && !infiniteAmmo && !reloading)
+        if (currentAmmo <= 0 && !infiniteAmmo && !reloading )
         {
             StartCoroutine(Reload());
             reloading = true;

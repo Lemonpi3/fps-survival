@@ -5,6 +5,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class Player : Charecter
 {
+    /*[SerializeField]
+    private Inventory inventory;*/
     [SerializeField]
     private int currentWeapon = 0;
     
@@ -15,6 +17,12 @@ public class Player : Charecter
     private GameObject weaponsParent;
 
     Camera cam;
+
+    private void Awake()
+    {
+        
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -25,6 +33,7 @@ public class Player : Charecter
             Destroy(transform.Find("Camera").gameObject);
             return;
         }*/
+        inventory = GetComponent<Inventory>();
         cam = GetComponentInChildren<Camera>();
     }
 
@@ -69,20 +78,24 @@ public class Player : Charecter
             SwapWeapons(currentWeapon - 1);
         }
 
-        if (Input.GetButton("Fire1"))
+       /* if (!inventory.isMenuOpen)
         {
-            weapons[currentWeapon].Shoot(cam);
-        }
+            if (Input.GetButton("Fire1"))
+            {
+                weapons[currentWeapon].Shoot(cam);
+            }
 
-        if (Input.GetButton("Fire2"))
-        {
-            weapons[currentWeapon].Shoot(cam,true);
-        }
+            if (Input.GetButton("Fire2"))
+            {
+                weapons[currentWeapon].Shoot(cam, true);
+            }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-           StartCoroutine(weapons[currentWeapon].Reload());
-        }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                StartCoroutine(weapons[currentWeapon].Reload());
+            }
+        }*/
+        
     }
 
     private void SwapWeapons(int newSlot)

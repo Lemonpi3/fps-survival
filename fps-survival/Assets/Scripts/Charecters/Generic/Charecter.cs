@@ -37,6 +37,8 @@ public abstract class Charecter : MonoBehaviour
     [SerializeField]
     protected float _moveSpeed;
 
+    protected Inventory inventory;
+
     protected virtual void Start()
     {
         SetCharecterDefaultStats();
@@ -60,6 +62,7 @@ public abstract class Charecter : MonoBehaviour
 
     public virtual void Heal(int amount)
     {
+        Debug.Log("Healing " + amount);
         healthCurrent += amount;
     }
 
@@ -93,5 +96,10 @@ public abstract class Charecter : MonoBehaviour
     protected virtual void ChangeTeam(Team newTeam)
     {
         team = newTeam;
+    }
+
+    public Inventory GetInventory()
+    {
+        return inventory;
     }
 }
