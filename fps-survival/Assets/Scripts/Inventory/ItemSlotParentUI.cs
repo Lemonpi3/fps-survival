@@ -38,11 +38,14 @@ public class ItemSlotParentUI : MonoBehaviour
         }
     }
 
-    public void ChangeOwner(Charecter newOwner,Inventory sameInventory)
+    /// <summary>
+    /// Changes the owner of the inventory UI to a new one
+    /// </summary>
+    public void ChangeOwner(Charecter newOwner,Inventory Inventory)
     {
         for (int i = 0; i < slots.Count; i++)
         {
-            slots[i].SetItemSlot(slots[i].GetSlot(), newOwner, sameInventory);
+            slots[i].SetItemSlot(slots[i].GetSlot(), newOwner, Inventory);
         }
     }
 }

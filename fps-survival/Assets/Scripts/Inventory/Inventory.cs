@@ -112,6 +112,9 @@ public class Inventory : MonoBehaviour
         Debug.Log("Removed " + (amount - amountRemaining) + " of " + amount);
     }
 
+    /// <summary>
+    /// Returns the amount that is in the inventory
+    /// </summary>
     public int CheckAmountInInventory(Item item)
     {
         int amount=0;
@@ -181,7 +184,7 @@ public class Inventory : MonoBehaviour
     public void LoadInventoryUI()
     {
         owner = GetComponent<Charecter>();
-        if(slotParentUI.slots.Count != maxInventorySize)
+        if(slotParentUI.slots.Count != maxInventorySize && inventoryUI != null)
         {
             CreateSlots(maxInventorySize);
         }
@@ -197,9 +200,12 @@ public class Inventory : MonoBehaviour
         inventoryUI.ResetPos();
     }
 
-    public void ChangeNewUser(Charecter newOwner)
+    /// <summary>
+    /// Sets the user of the inventoryUI, and can set a new ownership from an existing inventory
+    /// </summary>
+    public void ChangeNewUser(Charecter newOwner,Inventory inventory)
     {
-        slotParentUI.ChangeOwner(newOwner,this);
+        slotParentUI.ChangeOwner(newOwner,inventory);
         owner = newOwner;
     }
 

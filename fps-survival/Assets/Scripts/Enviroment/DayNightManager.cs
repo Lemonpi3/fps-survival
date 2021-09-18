@@ -19,6 +19,7 @@ public class DayNightManager : MonoBehaviour
         if (counter > 360)
         {
             counter = 0;
+            GameManager.instance.NextDay();
         }
     
         sunTransform.rotation = Quaternion.Euler(counter, sunTransform.rotation.y, sunTransform.rotation.z);

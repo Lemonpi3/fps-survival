@@ -26,6 +26,7 @@ public class Player : Charecter
     protected override void Start()
     {
         base.Start();
+        GameManager.instance.AddPlayerToTeam(team, this);
         LoadWeapons();
         /*if (!IsLocalPlayer)
         {
@@ -51,7 +52,8 @@ public class Player : Charecter
 
     protected override void Die()
     {
-        base.Die();
+        GameManager.instance.PlayerDied(team);
+        Respawn(GameManager.instance.GetRespawnTime(team));
     }
 
     public override void Heal(int amount)
@@ -64,6 +66,10 @@ public class Player : Charecter
         base.TakeDamage(amount);
     }
 
+    public void Respawn(float respawnTime= 0)
+    {
+        if (!GameManager.instance.respawnEnabled) { return; }
+    }
 
 
     private void GetInputs()
@@ -165,4 +171,6 @@ public class Player : Charecter
         }
         else return null;
     }
+
+    
 }

@@ -7,8 +7,10 @@ public class Storage : Interactable
     [SerializeField] Inventory storageInventory;
     [SerializeField] InventoryUI storageUI;
 
-    [SerializeField] Inventory interactorInventory;
     [SerializeField] Transform interactorInventoryPos;
+    [SerializeField] int storageAmount = 70;
+
+    Inventory interactorInventory;
 
     public Item testItem;
     public int amount;
@@ -33,14 +35,14 @@ public class Storage : Interactable
 
         if (storageInventory.tag == charecter.tag && charecter != storageInventory.GetOwner())
         {
-            storageInventory.ChangeNewUser(charecter);
+            storageInventory.ChangeNewUser(charecter,storageInventory);
         }
 
         interactorInventory = charecter.GetInventory();
         interactorInventory.ToggleUI(true);
         interactorInventory.ChangeInventoryUIPos(interactorInventoryPos.position);
         storageUI.gameObject.SetActive(true);
-        
+        storageInventory.ShowSomeSlots(storageAmount);
     }
 
     public override void StopInteracting()
@@ -51,7 +53,4 @@ public class Storage : Interactable
         interactorInventory = null;
         base.StopInteracting();
     }
-
-    
-
 }
