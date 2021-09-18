@@ -14,6 +14,10 @@ public class Player : Charecter
     [SerializeField]
     private GameObject weaponsParent;
 
+    [SerializeField] int _playerGold;
+    public int playerGold => _playerGold;
+
+    MainBeacon playerBeacon;
     Transform _respawnPos;
     Camera cam;
     bool isDead;
@@ -110,12 +114,12 @@ public class Player : Charecter
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            inventory.ToggleUI(!inventory.isMenuOpen);
+            UIManager.instance.TogglePlayerInventory_ALL();
         }
 
         if (isDead) { return; }
 
-        if (!inventory.isMenuOpen)
+        if (!UIManager.instance.isMenuOpen)
         {
             if (Input.mouseScrollDelta.y > 0)
             {
@@ -206,4 +210,32 @@ public class Player : Charecter
         _respawnPos.position = respawnPos.position;
     }
     
+    /// <summary>
+    /// gold += amount
+    /// </summary>
+    public void modifyGoldAdditive(int amount)
+    {
+        _playerGold += amount;
+    }
+
+    public void SetBeacon()
+    {
+        if(team == Team.Team1)
+        {
+            playerBeacon = GameManager.instance.beaconTeam1;
+        }
+        else
+            playerBeacon = GameManager.instance.beaconTeam2;
+    }
+
+    public override void ChangeTeam(Team newTeam)
+    {
+        base.ChangeTeam(newTeam);
+        SetBeacon();
+    }
+
+    public Inventory GetBeaconInventory()
+    {
+        return playerBeacon.GetInventory();
+    }
 }

@@ -104,6 +104,8 @@ GameObject:
   - component: {fileID: 3869925728770796763}
   - component: {fileID: 3869925728770796762}
   - component: {fileID: 5170475882703278019}
+  - component: {fileID: 4716986844447961581}
+  - component: {fileID: 1968133017827900463}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -165,3 +167,29 @@ MonoBehaviour:
   team1Deaths: 0
   team2Deaths: 0
   beaconPrefab: {fileID: 0}
+  beaconTeam1: {fileID: 0}
+  beaconTeam2: {fileID: 0}
+--- !u!114 &4716986844447961581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3869925728770796765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c5ebca42a53036469eebbe1a70bfedd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1968133017827900463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3869925728770796765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f455b2a8020584381d6395f60732f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

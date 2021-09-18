@@ -14,8 +14,6 @@ public class Inventory : MonoBehaviour
 
     private Charecter owner;
 
-    public bool isMenuOpen { get { if (inventoryUI != null) { return inventoryUI.gameObject.activeSelf; } else return false; } }
-
     [Header("Testing porpuse")]
     public Item testItem;
     public int testAmount;
@@ -84,6 +82,8 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(Item item,int amount)
     {
+        if(item == null) { return; }
+
         int amountRemaining = amount;
         for (int i = 0; i < maxInventorySize; i++)
         {
@@ -173,12 +173,6 @@ public class Inventory : MonoBehaviour
         if (itemToAdd.ContainsKey(item) != item || itemToAdd == null) { Debug.Log("Failed to get the item: " + item+" amount Requested: "+ amount); return; }
 
         AddItem(item, itemToAdd[item]);
-    }
-
-    public void ToggleUI(bool state)
-    {
-        if(inventoryUI != null)
-            inventoryUI.gameObject.SetActive(state);
     }
 
     public void LoadInventoryUI()

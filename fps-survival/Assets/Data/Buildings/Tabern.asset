@@ -10,8 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66c480e46d3f9db4db5d2d89008fabd0, type: 3}
-  m_Name: MainBeacon
+  m_Name: Tabern
   m_EditorClassIdentifier: 
   _charecterName: 
   _team: 0
-  _healthMax: 1
+  _healthMax: 50
+  _buildPrefab: {fileID: 0}
+  _maxRank: 3
+  _rankHpIncrease: 640000006400000064000000
+  _rankUpGoldCost: 320000006400000096000000
+  _buildCost: 0
+  _buildTime: 5
+  _itemsToBuild: []
+  _itemsToBuildAmountNeeded: 

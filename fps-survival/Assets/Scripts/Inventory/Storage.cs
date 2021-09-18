@@ -39,17 +39,15 @@ public class Storage : Interactable
         }
 
         interactorInventory = charecter.GetInventory();
-        interactorInventory.ToggleUI(true);
+        UIManager.instance.ToggleStorageInventory();
         interactorInventory.ChangeInventoryUIPos(interactorInventoryPos.position);
-        storageUI.gameObject.SetActive(true);
         storageInventory.ShowSomeSlots(storageAmount);
     }
 
     public override void StopInteracting()
     {
         interactorInventory.ResetInventoryUIPos();
-        interactorInventory.ToggleUI(false);
-        storageUI.gameObject.SetActive(false);
+        UIManager.instance.ToggleStorageInventory();
         interactorInventory = null;
         base.StopInteracting();
     }

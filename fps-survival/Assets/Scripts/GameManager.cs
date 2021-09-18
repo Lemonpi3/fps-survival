@@ -63,8 +63,18 @@ public class GameManager : MonoBehaviour
     [Header("Beacons")]
     public GameObject beaconPrefab;
 
-    MainBeacon beaconTeam1;
-    MainBeacon beaconTeam2;
+    public MainBeacon beaconTeam1;
+    public MainBeacon beaconTeam2;
+
+    [Header("Villager Settings")]
+
+    public int maxVillagerCount;
+    public GameObject villagerPrefab;
+    public Transform villagerSpawnPoint;
+
+    public List<Villager> wildVillagers;
+    public List<Villager> team1Villagers;
+    public List<Villager> team2Villagers;
 
     private void Start()
     {
@@ -156,6 +166,15 @@ public class GameManager : MonoBehaviour
         {
             team2Players.Add(player);
             player.SetRespawnPos(beaconTeam2.playerRespawn);
+        }
+    }
+
+    public void RespawnVillager()
+    {
+        if((wildVillagers.Count+team1Villagers.Count+team2Villagers.Count)< maxVillagerCount)
+        {
+            Villager villager = Instantiate(villagerPrefab, villagerSpawnPoint.position, Quaternion.identity).GetComponent<Villager>();
+            villager.ChangeTeam(Team.Neutral);
         }
     }
 }
