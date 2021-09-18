@@ -63,14 +63,20 @@ public class GameManager : MonoBehaviour
     [Header("Beacons")]
     public GameObject beaconPrefab;
 
-    GameObject beaconTeam1;
-    GameObject beaconTeam2;
+    MainBeacon beaconTeam1;
+    MainBeacon beaconTeam2;
 
-    public void GameOver(Team looser=Team.Team1,bool survivalWin = false)
+    private void Start()
+    {
+        beaconTeam1.GetComponent<Charecter>().ChangeTeam(Team.Team1);
+        beaconTeam2.GetComponent<Charecter>().ChangeTeam(Team.Team2);
+    }
+
+    public void GameOver(Team looser=Team.Team1,bool survivalWin = false,bool lostBeacon = false)
     {
         if (gameMode == GameMode.Versus)
         {
-            if (isSurvival && beaconTeam1 != null && beaconTeam2 !=null && !deathMatchEnabled)
+            if (isSurvival && beaconTeam1 != null && beaconTeam2 !=null && !deathMatchEnabled && !lostBeacon)
             {
                 deathMatchEnabled = true;
                 respawnEnabled = false;
@@ -99,7 +105,11 @@ public class GameManager : MonoBehaviour
         currentDay += 1;
         if(currentDay > daysToSurvive && isSurvival)
         {
-            GameOver(Team.Team1, true);
+            if (gameMode != GameMode.Versus)
+            {
+                GameOver(Team.Team1, true); //survival win
+            }
+            else GameOver(Team.Team1, false, true); //enables deathmatch
         }
     }
 
@@ -140,8 +150,13 @@ public class GameManager : MonoBehaviour
         if (team == Team.Team1)
         {
             team1Players.Add(player);
+            player.SetRespawnPos(beaconTeam1.playerRespawn);
         }
-        else team2Players.Add(player);
+        else
+        {
+            team2Players.Add(player);
+            player.SetRespawnPos(beaconTeam2.playerRespawn);
+        }
     }
 }
 

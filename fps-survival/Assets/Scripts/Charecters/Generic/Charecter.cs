@@ -99,9 +99,10 @@ public abstract class Charecter : MonoBehaviour
 
     }
 
-    protected virtual void ChangeTeam(Team newTeam)
+    public virtual void ChangeTeam(Team newTeam)
     {
         team = newTeam;
+        gameObject.tag = team.ToString();
     }
 
     public Inventory GetInventory()

@@ -5,8 +5,6 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class Player : Charecter
 {
-    /*[SerializeField]
-    private Inventory inventory;*/
     [SerializeField]
     private int currentWeapon = 0;
     
@@ -16,7 +14,9 @@ public class Player : Charecter
     [SerializeField]
     private GameObject weaponsParent;
 
+    Transform _respawnPos;
     Camera cam;
+    bool isDead;
 
     private void Awake()
     {
@@ -53,7 +53,13 @@ public class Player : Charecter
     protected override void Die()
     {
         GameManager.instance.PlayerDied(team);
-        Respawn(GameManager.instance.GetRespawnTime(team));
+
+        if (!GameManager.instance.respawnEnabled) { Destroy(gameObject); }
+        else
+        {
+            isDead = true;
+            StartCoroutine(Respawn(GameManager.instance.GetRespawnTime(team)));
+        }
     }
 
     public override void Heal(int amount)
@@ -66,14 +72,49 @@ public class Player : Charecter
         base.TakeDamage(amount);
     }
 
-    public void Respawn(float respawnTime= 0)
-    {
-        if (!GameManager.instance.respawnEnabled) { return; }
-    }
 
+    private IEnumerator Respawn(float respawnTime = 0)
+    {
+        if (isDead)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                GameObject child = transform.GetChild(i).gameObject;
+                if(child != cam.gameObject)
+                {
+                    child.SetActive(!child.activeSelf);
+                }
+            }
+        }
+
+        Debug.Log("respawing");
+
+        yield return new WaitForSeconds(respawnTime);
+
+        transform.position = _respawnPos.position;
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            if (child != cam.gameObject)
+            {
+                child.SetActive(!child.activeSelf);
+            }
+        }
+        isDead = false;
+        SetCharecterDefaultStats();
+        Debug.Log("respawed");
+    }
 
     private void GetInputs()
     {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventory.ToggleUI(!inventory.isMenuOpen);
+        }
+
+        if (isDead) { return; }
+
         if (!inventory.isMenuOpen)
         {
             if (Input.mouseScrollDelta.y > 0)
@@ -110,18 +151,6 @@ public class Player : Charecter
                 }
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            inventory.ToggleUI(!inventory.isMenuOpen);
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            inventory.AddItem(inventory.testItem, inventory.testAmount);
-            inventory.RemoveItem(inventory.testItem, inventory.removeAmount);
-        }
-
     }
 
     private void SwapWeapons(int newSlot)
@@ -172,5 +201,9 @@ public class Player : Charecter
         else return null;
     }
 
+    public void SetRespawnPos(Transform respawnPos)
+    {
+        _respawnPos.position = respawnPos.position;
+    }
     
 }
