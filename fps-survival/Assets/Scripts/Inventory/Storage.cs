@@ -22,7 +22,7 @@ public class Storage : Interactable
 
         if(interacted && Input.GetKeyDown(KeyCode.Alpha1))
         {
-            storageInventory.GetItemFromOtherInventory(testItem, amount, interactorInventory);
+            storageInventory.TryToGetItemFromOtherInventory(testItem, amount, interactorInventory);
         }
     }
 
