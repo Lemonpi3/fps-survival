@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
 
     private Charecter owner;
 
+    public bool isMenuOpen { get { if (inventoryUI != null) { return inventoryUI.gameObject.activeSelf; } else return false; } }
 
     [Header("Testing porpuse")]
     public Item testItem;
@@ -42,7 +43,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool AddItem(Item item,int amount) //TBD
+    public bool AddItem(Item item,int amount)
     {
         int amountRemaining = amount;
 
@@ -50,7 +51,7 @@ public class Inventory : MonoBehaviour
         {
             if (inventory[i].CanAcceptItem(item) && amountRemaining > 0)
             {
-                int amountThatCanBeAdded =item.stackSize- inventory[i].GetItemAmount();
+                int amountThatCanBeAdded =item.GetStackSize(owner._storageType)- inventory[i].GetItemAmount();
 
                 if(amountRemaining >= amountThatCanBeAdded)
                 {
@@ -123,5 +124,26 @@ public class Inventory : MonoBehaviour
             }
         }
         return amount;
+    }
+
+    /// <summary>
+    /// Returns a dictionary with the amount of eachItem in the array
+    /// </summary>
+    public Dictionary<Item,int> GetAllItemsAmountFromAnArray(Item[] items)
+    {
+        Dictionary<Item, int> itemsToReturn = new Dictionary<Item, int>();
+        
+        for (int i = 0; i < items.Length; i++)
+        {
+            itemsToReturn.Add(items[i], CheckAmountInInventory(items[i]));
+        }
+
+        return itemsToReturn;
+    }
+
+    public void ToggleUI()
+    {
+        if(inventoryUI != null)
+            inventoryUI.gameObject.SetActive(!isMenuOpen);
     }
 }

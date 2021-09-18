@@ -39,6 +39,12 @@ public abstract class Charecter : MonoBehaviour
 
     protected Inventory inventory;
 
+    
+
+    [SerializeField]
+    protected StorageType storageType;
+    public StorageType _storageType =>storageType;
+
     protected virtual void Start()
     {
         SetCharecterDefaultStats();
@@ -103,3 +109,4 @@ public abstract class Charecter : MonoBehaviour
         return inventory;
     }
 }
+public enum StorageType { Player, Gatherer, Storage, Vendor }

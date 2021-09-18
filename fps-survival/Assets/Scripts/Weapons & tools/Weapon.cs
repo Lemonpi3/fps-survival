@@ -140,7 +140,7 @@ public class Weapon : MonoBehaviour
             }
             else if(target.tag == "Resource")
             {
-                Debug.Log(target.GetComponent<Resource>().GatherResource(mainGatherType, mainGatherTier, mainDamageToResource));
+                Debug.Log(target.GetComponent<ResourceNode>().GatherResource(mainGatherType, mainGatherTier, mainDamageToResource));
             }
         }
         else
@@ -152,7 +152,7 @@ public class Weapon : MonoBehaviour
 
             else if (target.tag == "Resource")
             {
-                Debug.Log(target.GetComponent<Resource>().GatherResource(altGatherType, altGatherTier, altDamageToResource));
+                Debug.Log(target.GetComponent<ResourceNode>().GatherResource(altGatherType, altGatherTier, altDamageToResource));
             }
         }
     }

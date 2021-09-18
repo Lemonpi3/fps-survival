@@ -31,7 +31,7 @@ public class ItemSlot
 
     public bool CanAcceptItem(Item _item)
     {
-        if (item == _item && itemAmount < item.stackSize || isEmpty) { return true; } else return false;
+        if (item == _item && itemAmount < item.GetStackSize(owner._storageType) || isEmpty) { return true; } else return false;
     }
 
     public bool isSameItem(Item _item)

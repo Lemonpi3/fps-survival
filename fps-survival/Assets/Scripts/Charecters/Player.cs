@@ -78,7 +78,7 @@ public class Player : Charecter
             SwapWeapons(currentWeapon - 1);
         }
 
-       /* if (!inventory.isMenuOpen)
+        if (!inventory.isMenuOpen)
         {
             if (Input.GetButton("Fire1"))
             {
@@ -94,7 +94,13 @@ public class Player : Charecter
             {
                 StartCoroutine(weapons[currentWeapon].Reload());
             }
-        }*/
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventory.ToggleUI();
+            Debug.Log(inventory.isMenuOpen);
+        }
         
     }
 
