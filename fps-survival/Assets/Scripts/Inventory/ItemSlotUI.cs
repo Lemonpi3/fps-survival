@@ -35,10 +35,10 @@ public class ItemSlotUI : MonoBehaviour
         }
     }
 
-    public void SetItemSlot(ItemSlot _slot,Charecter owner)
+    public void SetItemSlot(ItemSlot _slot,Charecter owner,Inventory inventory)
     {
         slot = _slot;
-        slot.SetOwnerAndSlot(owner);
+        slot.SetOwnerAndSlot(owner,inventory);
     }
 
     public int GetItemAmount()
@@ -49,5 +49,10 @@ public class ItemSlotUI : MonoBehaviour
     public void UseItem()
     {
         slot.UseItem();
+    }
+
+    public ItemSlot GetSlot()
+    {
+        return slot;
     }
 }

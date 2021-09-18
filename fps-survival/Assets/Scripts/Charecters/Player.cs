@@ -68,18 +68,18 @@ public class Player : Charecter
 
     private void GetInputs()
     {
-        if (Input.mouseScrollDelta.y > 0)
-        {
-            SwapWeapons(currentWeapon + 1);
-        }
-
-        if (Input.mouseScrollDelta.y < 0)
-        {
-            SwapWeapons(currentWeapon - 1);
-        }
-
         if (!inventory.isMenuOpen)
         {
+            if (Input.mouseScrollDelta.y > 0)
+            {
+                SwapWeapons(currentWeapon + 1);
+            }
+
+            if (Input.mouseScrollDelta.y < 0)
+            {
+                SwapWeapons(currentWeapon - 1);
+            }
+
             if (Input.GetButton("Fire1"))
             {
                 weapons[currentWeapon].Shoot(cam);
@@ -94,14 +94,28 @@ public class Player : Charecter
             {
                 StartCoroutine(weapons[currentWeapon].Reload());
             }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                RaycastHit _hit;
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, LayerMask.NameToLayer("Interactable")))
+                {
+                    _hit.collider.GetComponent<Interactable>().Interact(this);
+                }
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            inventory.ToggleUI();
-            Debug.Log(inventory.isMenuOpen);
+            inventory.ToggleUI(!inventory.isMenuOpen);
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            inventory.AddItem(inventory.testItem, inventory.testAmount);
+            inventory.RemoveItem(inventory.testItem, inventory.removeAmount);
+        }
+
     }
 
     private void SwapWeapons(int newSlot)

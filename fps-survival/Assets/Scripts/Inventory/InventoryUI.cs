@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Vector3 defaultPos;
+    RectTransform rectTransform;
+
+    private void Start()
     {
-        
+        rectTransform =GetComponent<RectTransform>();
+        defaultPos = rectTransform.position;
+        gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeInventoryPos(Vector3 newPos)
     {
-        
+        rectTransform.position = newPos;
+    }
+
+    public void ResetPos()
+    {
+       rectTransform.position = defaultPos;
     }
 }
+

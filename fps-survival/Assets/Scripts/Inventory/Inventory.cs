@@ -6,7 +6,8 @@ public class Inventory : MonoBehaviour
 {
     public Dictionary<int,ItemSlot> inventory = new Dictionary<int,ItemSlot>();
 
-    [SerializeField] int inventorySize = 40;
+    [SerializeField] int maxInventorySize = 40; //maximum amount the charecter can have
+    [SerializeField] int currentInventorySize = 40; //amount of storage aviable to use
     [SerializeField] InventoryUI inventoryUI;
     [SerializeField] GameObject slotUIprefab;
     [SerializeField] ItemSlotParentUI slotParentUI;
@@ -23,23 +24,21 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        owner = GetComponent<Charecter>();
-        AddSlots(inventorySize*2);
-        AddItem(testItem, testAmount);
-        RemoveItem(testItem, removeAmount);
+        LoadInventoryUI();
+        ShowSomeSlots(currentInventorySize);
     }
 
-    public void AddSlots(int amount=0)
+    public void CreateSlots(int amount=0)
     {
-        if(amount- inventorySize <= 0 || inventoryUI == null) { return; }
+        if(maxInventorySize <= 0 || inventoryUI == null) { return; }
 
-        for (int i = 0; i < amount-inventorySize; i++)
+        for (int i = 0; i < amount; i++)
         {
             ItemSlotUI slot = (Instantiate(slotUIprefab, slotParentUI.transform).GetComponent<ItemSlotUI>());
             slot.gameObject.name = "Slot " + i;
             slotParentUI.slots.Add(slot);
             inventory.Add(i, new ItemSlot());
-            slot.SetItemSlot(inventory[i],owner);
+            slot.SetItemSlot(inventory[i],owner,this);
         }
     }
 
@@ -47,7 +46,7 @@ public class Inventory : MonoBehaviour
     {
         int amountRemaining = amount;
 
-        for (int i = 0; i < inventorySize; i++)
+        for (int i = 0; i < maxInventorySize; i++)
         {
             if (inventory[i].CanAcceptItem(item) && amountRemaining > 0)
             {
@@ -86,7 +85,7 @@ public class Inventory : MonoBehaviour
     public void RemoveItem(Item item,int amount)
     {
         int amountRemaining = amount;
-        for (int i = 0; i < inventorySize; i++)
+        for (int i = 0; i < maxInventorySize; i++)
         {
             if (inventory[i].isSameItem(item) && amountRemaining > 0)
             {
@@ -116,7 +115,7 @@ public class Inventory : MonoBehaviour
     public int CheckAmountInInventory(Item item)
     {
         int amount=0;
-        for (int i = 0; i < inventorySize; i++)
+        for (int i = 0; i < maxInventorySize; i++)
         {
             if (inventory[i].isSameItem(item))
             {
@@ -141,9 +140,76 @@ public class Inventory : MonoBehaviour
         return itemsToReturn;
     }
 
-    public void ToggleUI()
+    /// <summary>
+    /// Trys to get the amount of the item given
+    /// </summary>
+    /// <returns>Dictionary of the Item and the amount or Null if the item is not found in the inventory or the amount aviable is less than requested</returns>
+    public Dictionary<Item, int> GetItemFromTheInventory(Item item,int amount)
+    {
+        Dictionary<Item, int> itemsToReturn = new Dictionary<Item, int>();
+        int amountToAdd = CheckAmountInInventory(item);
+
+        if(amountToAdd <= 0) { Debug.Log("Item Not found"); return null; }
+
+        if(amountToAdd < amount) { Debug.Log("Item Not found"); return null; }
+        
+        else
+        {
+            itemsToReturn.Add(item, amount);
+            RemoveItem(item, amount);
+        }
+        return itemsToReturn;
+    }
+
+    /// <summary>
+    /// Gets item from other inventory,fails if the item is not found in the inventory or the amount aviable is less than requested
+    /// </summary>
+    public void TryToGetItemFromOtherInventory(Item item, int amount,Inventory targetInventory)
+    {
+        Dictionary<Item, int> itemToAdd = targetInventory.GetItemFromTheInventory(item, amount);
+        if (itemToAdd.ContainsKey(item) != item || itemToAdd == null) { Debug.Log("Failed to get the item: " + item+" amount Requested: "+ amount); return; }
+
+        AddItem(item, itemToAdd[item]);
+    }
+
+    public void ToggleUI(bool state)
     {
         if(inventoryUI != null)
-            inventoryUI.gameObject.SetActive(!isMenuOpen);
+            inventoryUI.gameObject.SetActive(state);
+    }
+
+    public void LoadInventoryUI()
+    {
+        owner = GetComponent<Charecter>();
+        if(slotParentUI.slots.Count != maxInventorySize)
+        {
+            CreateSlots(maxInventorySize);
+        }
+    }
+
+    public void ChangeInventoryUIPos(Vector3 newPos)
+    {
+        inventoryUI.ChangeInventoryPos(newPos);
+    }
+    
+    public void ResetInventoryUIPos()
+    {
+        inventoryUI.ResetPos();
+    }
+
+    public void ChangeNewUser(Charecter newOwner)
+    {
+        slotParentUI.ChangeOwner(newOwner,this);
+        owner = newOwner;
+    }
+
+    public Charecter GetOwner()
+    {
+        return owner;
+    }
+
+    public void ShowSomeSlots(int amount)
+    {
+        slotParentUI.ShowASetAmountOfSlots(amount);
     }
 }

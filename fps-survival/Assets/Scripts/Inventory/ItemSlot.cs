@@ -49,10 +49,10 @@ public class ItemSlot
         return item;
     }
 
-    public void SetOwnerAndSlot(Charecter _owner)
+    public void SetOwnerAndSlot(Charecter _owner,Inventory inventory)
     {
         owner = _owner;
-        ownerInventory= owner.GetComponent<Inventory>();
+        ownerInventory= inventory;
     }
 
     public void UseItem()
