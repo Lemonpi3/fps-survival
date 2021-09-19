@@ -34,7 +34,8 @@ public abstract class NpcAI : MonoBehaviour
 
     private SphereCollider antiBumpCollider; //to prevent the ai bumping while trying to reach the center of big targets with an OnTriggerEnter
     protected bool bumpingWithTarget;  //the bool is to control the NpcAI state (specific to their respective AIs (VillagerAI,EnemyAI , etc))
-    
+   
+    public bool reachedTarget => distanceToTar <= stopRange || bumpingWithTarget;
     protected NavMeshAgent agent;
     
     protected virtual void Start()
@@ -52,7 +53,7 @@ public abstract class NpcAI : MonoBehaviour
         }
     }
 
-    protected float CalculateDistance(Vector3 pos1, Vector3 pos2)
+    public float CalculateDistance(Vector3 pos1, Vector3 pos2)
     {
         return Vector3.Distance(pos1,pos2);
     }
@@ -68,12 +69,16 @@ public abstract class NpcAI : MonoBehaviour
     /// </summary>
     protected void GoToRandomRoamPos()
     {
+       agent.SetDestination(GetRandomRoamPos());
+    }
+
+    protected Vector3 GetRandomRoamPos()
+    {
         float x = Random.Range(startingPos.x - roamRange, startingPos.x + roamRange);
         float z = Random.Range(startingPos.z - roamRange, startingPos.z + roamRange);
 
-        Vector3 roamPos = new Vector3(x , transform.position.y, z);
-        
-       agent.SetDestination(roamPos);
+        Vector3 roamPos = new Vector3(x, transform.position.y, z);
+        return roamPos;
     }
 
     protected void Roam()

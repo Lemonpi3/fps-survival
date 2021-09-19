@@ -31,6 +31,9 @@ public class BuildingData : CharecterData
 
     Dictionary<Item, int> buildItemList = new Dictionary<Item, int>();
 
+    [SerializeField] int _villagersNeeded;
+    public int villagersNeeded => _villagersNeeded;
+
     public Dictionary<Item ,int> GetItemList(){
 
         for (int i = 0; i<itemsToBuild.Length; i++)

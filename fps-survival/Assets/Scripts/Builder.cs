@@ -12,14 +12,18 @@ public class Builder : Interactable
     public Player player;
     public Inventory inventory;
     public Inventory alternativeInventory;
+    public Team team;
 
     public override void Interact(Charecter charecter)
     {
+        if (charecter.GetComponent<Player>() == null) { return; }
+
         base.Interact(charecter);
         player = interactor as Player;
         UIManager.instance.ToggleBuilderUI();
         inventory = player.GetBeaconInventory();
         alternativeInventory = player.GetInventory();
+        team = player.team;
     }
 
     public override void StopInteracting()

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class Building : Charecter
 {
-    [SerializeField] int rank = -1;
-    [SerializeField] int maxRank;
+    [SerializeField]protected int rank = -1;
+    [SerializeField]protected int maxRank;
 
     BuildingData buildingData;
 

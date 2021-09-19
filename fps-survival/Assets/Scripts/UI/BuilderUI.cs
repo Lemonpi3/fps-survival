@@ -11,8 +11,8 @@ public class BuilderUI : MonoBehaviour
         builder = _builder;
     }
 
-    public void SetBuild(int buildIDX)
+    public void SetBuild(int ind)
     {
-        BuildManager.instance.BuildBuilding(builder.inventory, builder.player,builder.buildPos[buildIDX], builder.buildings[buildIDX], builder.alternativeInventory);
+        BuildManager.instance.BuildBuilding(builder.inventory, builder.player, builder.buildPos[ind], builder.buildings[ind], builder.alternativeInventory);
     }
 }

@@ -66,9 +66,13 @@ public class GameManager : MonoBehaviour
     public MainBeacon beaconTeam1;
     public MainBeacon beaconTeam2;
 
+    [Header("Buildings")]
+    public List<Building> team1Buildings;
+    public List<Building> team2Buildings;
+
     [Header("Villager Settings")]
 
-    public int maxVillagerCount;
+    public int maxVillagerCount = 10;
     public GameObject villagerPrefab;
     public Transform villagerSpawnPoint;
 
@@ -120,6 +124,20 @@ public class GameManager : MonoBehaviour
                 GameOver(Team.Team1, true); //survival win
             }
             else GameOver(Team.Team1, false, true); //enables deathmatch
+        }
+        RespawnVillager();
+        CheckTeamsVillagersFullness();
+    }
+
+    public void CheckTeamsVillagersFullness()
+    {
+        foreach(Villager villager in team1Villagers)
+        {
+            villager.CheckFullnessStatus();
+        }
+        foreach (Villager villager in team2Villagers)
+        {
+            villager.CheckFullnessStatus();
         }
     }
 

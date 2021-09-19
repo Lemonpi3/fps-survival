@@ -20,8 +20,9 @@ public class Player : Charecter
     MainBeacon playerBeacon;
     Transform _respawnPos;
     Camera cam;
-    bool isDead;
+    public bool isDead;
 
+    public bool escortingVillager;
     private void Awake()
     {
         
@@ -237,5 +238,10 @@ public class Player : Charecter
     public Inventory GetBeaconInventory()
     {
         return playerBeacon.GetInventory();
+    }
+
+    public Transform GetBeaconLocation()
+    {
+        return playerBeacon.transform;
     }
 }

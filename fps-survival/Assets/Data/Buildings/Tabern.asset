@@ -15,7 +15,7 @@ MonoBehaviour:
   _charecterName: 
   _team: 0
   _healthMax: 50
-  _buildPrefab: {fileID: 0}
+  _buildPrefab: {fileID: 3720295830175181401, guid: 8866dd9d1011bcb4dac2fe1b4d44b98b, type: 3}
   _maxRank: 3
   _rankHpIncrease: 640000006400000064000000
   _rankUpGoldCost: 320000006400000096000000
