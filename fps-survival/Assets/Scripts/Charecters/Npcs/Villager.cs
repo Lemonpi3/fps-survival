@@ -11,16 +11,17 @@ public class Villager : Charecter
 
     int foodAmount;
 
-    int maxFoodAmount;
+    [SerializeField]int maxFoodAmount;
     public int _maxFood => maxFoodAmount;
 
     float foodAmountToStartFeeding;
+
     public float feedingTime;
 
     [SerializeField] int maxTasks;
     [SerializeField] Stack<string> taskQue = new Stack<string>();
 
-    public bool hasTaskAssinged => taskQue.Peek() != null || taskQue.Peek() != "";
+    public bool hasTaskAssinged => taskQue != null || taskQue.Peek() != "";
     
     VillagerAI villagerAI;
     
@@ -34,7 +35,6 @@ public class Villager : Charecter
     public void FollowPlayer(Player player)
     {
         villagerAI.target = player.gameObject;
-        villagerAI.SetNewHome(player.GetBeaconLocation());
         AddTask("Follow");
     }
 
@@ -129,7 +129,11 @@ public class Villager : Charecter
     //<<<<<<<<<<<<<<<<<<<<<<<<------------TASK STUFF-------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     public string GetCurrentTask()
     {
-        return taskQue.Peek();
+        if (taskQue.Count == 0)
+        {
+            return null;
+        }
+        else return taskQue.Peek();
     }
 
     public void AddTask(string task)
@@ -158,8 +162,12 @@ public class Villager : Charecter
         gameObject.name = villagerData.AssingName();
         maxFullness = villagerData._maxFullness;
         AddToVillagerList(Team.Neutral);    //to prevent an NullReference error pop that happens on start only
-        ChangeTeam(Team.Neutral);
         villagerAI = GetComponent<VillagerAI>();
+    }
+
+    public NpcData GetNpcData()
+    {
+        return villagerData;
     }
 
     public override void ChangeTeam(Team newTeam)
@@ -167,6 +175,7 @@ public class Villager : Charecter
         RemoveVillagerFromList();
         base.ChangeTeam(newTeam);
         AddToVillagerList(newTeam);
+        villagerAI.ChangeTeam(newTeam);
         ResetFullness();
     }
 
@@ -200,6 +209,11 @@ public class Villager : Charecter
         {
             GameManager.instance.wildVillagers.Remove(this);
         }
+    }
+
+    public void SetBeacon(MainBeacon _teamBeacon)
+    {
+        villagerAI.SetPlayerBeacon(_teamBeacon.villagersZone);
     }
 
     public void SetTabern()

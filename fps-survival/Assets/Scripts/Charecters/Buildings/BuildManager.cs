@@ -17,6 +17,9 @@ public class BuildManager : MonoBehaviour
 
     Dictionary<Item, int> buildItemCost;
 
+    public Transform team_1_buildingsParent;
+    public Transform team_2_buildingsParent;
+
     public GameObject prebuildPrefab;
     /// <summary>
     /// Trys to Build
@@ -121,9 +124,11 @@ public class BuildManager : MonoBehaviour
         {
             foreach (Villager villager in GameManager.instance.team1Villagers)
             {
-                if (!villager.hasTaskAssinged)
+                if (villager.GetCurrentTask() != "Building")
                 {
                     count++;
+                    villager.Build(sceneBP_GO);
+                    Debug.Log("Villager assinged");
                     if (count >= amount)
                     {
                         break;

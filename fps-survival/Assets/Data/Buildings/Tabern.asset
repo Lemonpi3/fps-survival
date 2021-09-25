@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c480e46d3f9db4db5d2d89008fabd0, type: 3}
   m_Name: Tabern
   m_EditorClassIdentifier: 
-  _charecterName: 
+  _charecterName: Tabern
   _team: 0
   _healthMax: 50
   _buildPrefab: {fileID: 3720295830175181401, guid: 8866dd9d1011bcb4dac2fe1b4d44b98b, type: 3}
@@ -23,3 +23,4 @@ MonoBehaviour:
   _buildTime: 5
   _itemsToBuild: []
   _itemsToBuildAmountNeeded: 
+  _villagersNeeded: 1

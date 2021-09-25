@@ -83,7 +83,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         beaconTeam1.GetComponent<Charecter>().ChangeTeam(Team.Team1);
-        beaconTeam2.GetComponent<Charecter>().ChangeTeam(Team.Team2);
+        if(beaconTeam2 != null)
+        {
+            beaconTeam2.GetComponent<Charecter>().ChangeTeam(Team.Team2);
+        }
     }
 
     public void GameOver(Team looser=Team.Team1,bool survivalWin = false,bool lostBeacon = false)
@@ -125,19 +128,28 @@ public class GameManager : MonoBehaviour
             }
             else GameOver(Team.Team1, false, true); //enables deathmatch
         }
-        RespawnVillager();
-        CheckTeamsVillagersFullness();
+        if(wildVillagers.Count != maxVillagerCount)
+        {
+            RespawnVillager();
+            CheckTeamsVillagersFullness();
+        }
     }
 
     public void CheckTeamsVillagersFullness()
     {
-        foreach(Villager villager in team1Villagers)
+        if(team1Villagers.Count != 0)
         {
-            villager.CheckFullnessStatus();
+            foreach (Villager villager in team1Villagers)
+            {
+                villager.CheckFullnessStatus();
+            }
         }
-        foreach (Villager villager in team2Villagers)
+        if (team2Villagers.Count != 0)
         {
-            villager.CheckFullnessStatus();
+            foreach (Villager villager in team2Villagers)
+            {
+                villager.CheckFullnessStatus();
+            }
         }
     }
 
@@ -173,26 +185,28 @@ public class GameManager : MonoBehaviour
         else return team2RespawnTime;
     }
 
-    public void AddPlayerToTeam(Team team,Player player)
+    public void AddPlayerToTeam(Player player)
     {
-        if (team == Team.Team1)
+        if (player.team == Team.Team1)
         {
             team1Players.Add(player);
-            player.SetRespawnPos(beaconTeam1.playerRespawn);
         }
         else
         {
             team2Players.Add(player);
-            player.SetRespawnPos(beaconTeam2.playerRespawn);
         }
+        player.SetBeacon();
     }
 
     public void RespawnVillager()
     {
-        if((wildVillagers.Count+team1Villagers.Count+team2Villagers.Count)< maxVillagerCount)
+        int villagersTotal = wildVillagers.Count + team1Villagers.Count + team2Villagers.Count;
+        if (villagersTotal < maxVillagerCount)
         {
-            Villager villager = Instantiate(villagerPrefab, villagerSpawnPoint.position, Quaternion.identity).GetComponent<Villager>();
-            villager.ChangeTeam(Team.Neutral);
+            for (int i = 0; i < maxVillagerCount-villagersTotal; i++)
+            {
+                Instantiate(villagerPrefab, villagerSpawnPoint.position, Quaternion.identity, villagerSpawnPoint).GetComponent<Villager>();
+            }
         }
     }
 }

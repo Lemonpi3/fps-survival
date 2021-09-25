@@ -18,7 +18,6 @@ public abstract class Charecter : MonoBehaviour
             }
             else if (value <= 0)
             {
-                healthCurrent = 0;
                 Die();
             }
             else

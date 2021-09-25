@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4867420821539819768}
   - component: {fileID: 1852119181113747831}
   - component: {fileID: 2934115943734044760}
+  - component: {fileID: 1990197974375359706}
   m_Layer: 0
-  m_Name: Tavern
+  m_Name: Tabern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,3 +96,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1990197974375359706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3720295830175181401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 301f729e2be0c5f4fa62d2c126956357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charecterData: {fileID: 11400000, guid: 198d2ac139ab8f3428556b2878292e4a, type: 2}
+  team: 0
+  _maxHealth: 0
+  _healthCurrent: 0
+  _moveSpeed: 0
+  storageType: 0
+  rank: -1
+  maxRank: 0
+  _maxFoodStoragePerRank: 

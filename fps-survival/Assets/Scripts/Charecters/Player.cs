@@ -23,15 +23,10 @@ public class Player : Charecter
     public bool isDead;
 
     public bool escortingVillager;
-    private void Awake()
-    {
-        
-    }
 
     protected override void Start()
     {
         base.Start();
-        GameManager.instance.AddPlayerToTeam(team, this);
         LoadWeapons();
         /*if (!IsLocalPlayer)
         {
@@ -41,6 +36,8 @@ public class Player : Charecter
         }*/
         inventory = GetComponent<Inventory>();
         cam = GetComponentInChildren<Camera>();
+        GameManager.instance.AddPlayerToTeam(this);
+        _respawnPos = playerBeacon.playerRespawn;
     }
 
     protected override void Update()
@@ -152,7 +149,10 @@ public class Player : Charecter
                 RaycastHit _hit;
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, LayerMask.NameToLayer("Interactable")))
                 {
-                    _hit.collider.GetComponent<Interactable>().Interact(this);
+                    if(_hit.collider.GetComponent<Interactable>() != null)
+                    {
+                        _hit.collider.GetComponent<Interactable>().Interact(this);
+                    }
                 }
             }
         }
@@ -240,8 +240,8 @@ public class Player : Charecter
         return playerBeacon.GetInventory();
     }
 
-    public Transform GetBeaconLocation()
+    public MainBeacon GetBeacon()
     {
-        return playerBeacon.transform;
+        return playerBeacon;
     }
 }

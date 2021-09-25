@@ -16,10 +16,11 @@ MonoBehaviour:
   _team: 0
   _healthMax: 50
   _buildPrefab: {fileID: 3116503673660220523, guid: 08d2f5cb6c1cb60479f91b774bbf2e29, type: 3}
-  _maxRank: 0
-  _rankHpIncrease: 
-  _rankUpGoldCost: 
+  _maxRank: 3
+  _rankHpIncrease: 320000003200000032000000
+  _rankUpGoldCost: 370000003200000032000000
   _buildCost: 0
   _buildTime: 0
   _itemsToBuild: []
   _itemsToBuildAmountNeeded: 
+  _villagersNeeded: 0

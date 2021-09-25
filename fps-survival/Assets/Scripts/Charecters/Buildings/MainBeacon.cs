@@ -5,11 +5,12 @@ using UnityEngine;
 public class MainBeacon : Building
 {
     public Transform playerRespawn;
-    
-    public StorageChar storage;
+    public Transform villagersZone;
+    [SerializeField] StorageChar storage;
 
     protected override void Start()
     {
+        base.Start();
         storage.ChangeTeam(team);
     }
 

@@ -5,10 +5,11 @@ using UnityEngine;
 public class VillagerAI : NpcAI
 {
     Tabern tabern;
-    Vector3 villageCenter;
+    Transform villageCenter;
     Transform teamBeacon;
 
     Villager villager;
+    VillagerInteractable villagerInteractable;
 
     string currentTask;
     float currentSpeed;
@@ -16,19 +17,17 @@ public class VillagerAI : NpcAI
     protected override void Start()
     {
         villager = GetComponent<Villager>();
+        npcData = villager.GetNpcData();
+        villageCenter = GameManager.instance.villagerSpawnPoint;
+        VillagerInteractable villagerInteractable = GetComponentInChildren<VillagerInteractable>();
+        base.Start();
         InvokeRepeating("Think", 0, aiTickTime);
-        villageCenter = transform.position;
     }
-
-    private void Update()
-    {
-        
-    }
-
+       
     private void Think()
     {
         currentTask = villager.GetCurrentTask();
-        if (team == Team.Neutral)
+        if (villager.team == Team.Neutral)
         {
             WildVillagerStateMachine();
         }
@@ -46,9 +45,9 @@ public class VillagerAI : NpcAI
                 {
                     Roam();
                 }
-                if (CalculateDistance(transform.position, villageCenter) > roamRange)
+                if (CalculateDistance(transform.position, villageCenter.position) > roamRange)
                 {
-                    agent.SetDestination(villageCenter);
+                    agent.SetDestination(villageCenter.position);
                 }
                 break;
             case "Flee":
@@ -76,7 +75,9 @@ public class VillagerAI : NpcAI
                     {
                         if(CalculateDistance(transform.position, teamBeacon.position)<= roamRange)
                         {
-                            villager.ChangeTeam(teamBeacon.GetComponent<MainBeacon>().team);
+                            villager.ChangeTeam(teamBeacon.GetComponentInParent<MainBeacon>().team);
+                            ChangeStartPos(teamBeacon.transform.position);
+                            target = null;
                             villager.CompleteCurrentTask();
                         }
                     }
@@ -88,6 +89,8 @@ public class VillagerAI : NpcAI
 
     void TeamVillagerStateMachine()
     {
+        if (target != null && reachedTarget) { agent.isStopped = true; return; } else agent.isStopped = false;
+        
         switch (currentTask)
         {
             default:
@@ -103,11 +106,10 @@ public class VillagerAI : NpcAI
             case "Flee":
                 if(villager.currentFullness <= 0)
                 {
-                    agent.SetDestination(villageCenter);
+                    agent.SetDestination(villageCenter.position);
                     if (CalculateDistance(transform.position, teamBeacon.position) <= roamRange && villager.currentFullness <= 0)
                     {
                         villager.ChangeTeam(Team.Neutral);
-                        VillagerInteractable villagerInteractable = GetComponentInChildren<VillagerInteractable>();
                         villagerInteractable.gameObject.SetActive(true);
                         villager.CompleteCurrentTask();
                     }
@@ -124,6 +126,7 @@ public class VillagerAI : NpcAI
                 }
                 break;
             case "Feed":
+                if(tabern == null) { return; }
                 agent.SetDestination(tabern.transform.position);
                 if (bumpingWithTarget || CalculateDistance(transform.position, tabern.transform.position) <= stopRange)
                 {
@@ -131,13 +134,11 @@ public class VillagerAI : NpcAI
                 }
                 break;
             case "Building":
-                if(target == null) { villager.CompleteCurrentTask(); }
+                if (target == null) { villager.CompleteCurrentTask(); }
+
+                if (reachedTarget) { return; }
 
                 agent.SetDestination(target.transform.position);
-                if (reachedTarget)
-                {
-                    agent.SetDestination(transform.position);
-                }
                 break;
         }
     }
@@ -157,9 +158,13 @@ public class VillagerAI : NpcAI
         startingPos = newStartPos;
     }
 
-    public void SetNewHome(Transform _teamBeacon)
+    public void SetPlayerBeacon(Transform _teamBeacon)
     {
-        teamBeacon =  _teamBeacon;
-        ChangeStartPos(teamBeacon.position);
+        teamBeacon = _teamBeacon;
+    }
+
+    public void ChangeTeam(Team _team)
+    {
+        team = _team;
     }
 }

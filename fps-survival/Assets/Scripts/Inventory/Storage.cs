@@ -15,13 +15,8 @@ public class Storage : Interactable
     public Item testItem;
     public int amount;
 
-    void Update()
+    protected override void Update()
     {
-        if(interacted && Input.GetKeyDown(KeyCode.Escape)&&isPlayer)
-        {
-            StopInteracting();
-        }
-
         if(interacted && Input.GetKeyDown(KeyCode.Alpha1))
         {
             storageInventory.TryToGetItemFromOtherInventory(testItem, amount, interactorInventory);

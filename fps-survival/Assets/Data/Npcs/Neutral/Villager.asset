@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Villager
   m_EditorClassIdentifier: 
   _charecterName: 
-  _team: 0
+  _team: 2
   _healthMax: 1
   _npc_type: 0
   _npcMesh: {fileID: 0}
-  _canRoam: 0
+  _canRoam: 1
   _dropsLoot: 0
   _moveSpeed: 8
-  _roamRange: 0
-  _attackRange: 0
-  _sightRange: 0
+  _roamRange: 10
+  _attackRange: 2
+  _sightRange: 5
   _attack_TYPE: 0
   _damage: 0
   _attackSpeed: 0
@@ -45,4 +45,6 @@ MonoBehaviour:
   - Joe Mama
   - Karen
   maxFullness: 5
-  minFullness: 0
+  minFullness: 1
+  maxHungerToStartFeeding: 1
+  minHungerToStartFeeding: 0

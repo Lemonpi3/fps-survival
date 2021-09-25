@@ -13,7 +13,7 @@ public class VillagerData : NpcData
     [SerializeField, Range(0, 5), Tooltip("max Fullness value of the villager")] int maxFullness = 5;
     public int _maxFullness => maxFullness;
 
-    [SerializeField, Range(0, 5), Tooltip("min Fullness value of the villager")] int minFullness = 0;
+    [SerializeField, Range(1, 5), Tooltip("min Fullness value of the villager")] int minFullness = 1;
 
     [SerializeField, Range(0, 1), Tooltip("max Fullness value of the villager")] float maxHungerToStartFeeding = 1;
     [SerializeField, Range(0, 1), Tooltip("max Fullness value of the villager")] float minHungerToStartFeeding = 0;

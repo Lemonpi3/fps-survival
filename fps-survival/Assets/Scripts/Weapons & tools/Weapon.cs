@@ -53,6 +53,7 @@ public class Weapon : MonoBehaviour
     {
         LoadWeapon();
     }
+
     public void Update()
     {
         if(_weapon == null) { return; }

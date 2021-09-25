@@ -193,6 +193,7 @@ MonoBehaviour:
   _maxHealth: 0
   _healthCurrent: 0
   _moveSpeed: 0
+  storageType: 0
   npcData: {fileID: 11400000, guid: 5f4b66c1971bff64f9981089c50b55cb, type: 2}
   attackSpeed: 0
   damage: 0
@@ -255,4 +256,5 @@ MonoBehaviour:
   canRoam: 0
   roamRange: 0
   roamTimeInterval: 5
+  antiBumpCollider: {fileID: 3046092760481234187}
   aistate: 0

@@ -19,11 +19,17 @@ public class Builder : Interactable
         if (charecter.GetComponent<Player>() == null) { return; }
 
         base.Interact(charecter);
-        player = interactor as Player;
+        player = charecter.GetComponent<Player>();
         UIManager.instance.ToggleBuilderUI();
+        builderUI.SetBuilder(this);
         inventory = player.GetBeaconInventory();
         alternativeInventory = player.GetInventory();
         team = player.team;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
     }
 
     public override void StopInteracting()

@@ -6,6 +6,11 @@ public class BuilderUI : MonoBehaviour
 {
     Builder builder;
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void SetBuilder(Builder _builder)
     {
         builder = _builder;

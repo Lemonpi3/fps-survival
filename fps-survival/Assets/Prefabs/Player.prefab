@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 1991961731453073035}
   - component: {fileID: 1991961731446653135}
   - component: {fileID: 1991961731456349481}
+  - component: {fileID: 767842407}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -295,12 +296,36 @@ MonoBehaviour:
   _maxHealth: 0
   _healthCurrent: 0
   _moveSpeed: 0
+  storageType: 0
   currentWeapon: 0
   weapons:
   - {fileID: 5636499653467556857}
   - {fileID: 614779463306641280}
   - {fileID: 1763027672966532885}
   weaponsParent: {fileID: 3021995930940413164}
+  _playerGold: 0
+  isDead: 0
+  escortingVillager: 0
+--- !u!114 &767842407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991961731456349485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b8a652d84d55a4ca2640ce3178060b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxInventorySize: 40
+  currentInventorySize: 40
+  inventoryUI: {fileID: 0}
+  slotUIprefab: {fileID: 6782782486775253197, guid: a8786a8aa8794fd43bcfa764ae1e45fe, type: 3}
+  slotParentUI: {fileID: 0}
+  testItem: {fileID: 11400000, guid: ba94af6ed7a723344803143ccfd2535b, type: 2}
+  testAmount: 8
+  removeAmount: 0
 --- !u!1 &1991961731456349487
 GameObject:
   m_ObjectHideFlags: 0
