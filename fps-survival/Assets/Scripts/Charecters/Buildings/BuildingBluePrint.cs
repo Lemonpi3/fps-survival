@@ -74,6 +74,10 @@ public class BuildingBluePrint : MonoBehaviour
         if (other.GetComponent<Villager>())
         {
             builders.Remove(other.GetComponent<Villager>());
+            if (builders.Count <= villagersNeeded)
+            {
+                _building = false;
+            }
         }
     }
 }

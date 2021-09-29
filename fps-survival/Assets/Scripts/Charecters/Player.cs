@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
 
 public class Player : Charecter
 {
@@ -69,7 +68,7 @@ public class Player : Charecter
         base.Heal(amount);
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int amount,Charecter charecter=null)
     {
         base.TakeDamage(amount);
     }
@@ -112,7 +111,7 @@ public class Player : Charecter
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            UIManager.instance.TogglePlayerInventory_ALL();
+            UIManager.instance.ToggleMenu(inventory.GetInventoryUI());
         }
 
         if (isDead) { return; }
@@ -233,15 +232,5 @@ public class Player : Charecter
     {
         base.ChangeTeam(newTeam);
         SetBeacon();
-    }
-
-    public Inventory GetBeaconInventory()
-    {
-        return playerBeacon.GetInventory();
-    }
-
-    public MainBeacon GetBeacon()
-    {
-        return playerBeacon;
     }
 }

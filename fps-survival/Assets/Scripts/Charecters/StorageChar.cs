@@ -10,7 +10,7 @@ public class StorageChar : Charecter
         storageType = StorageType.Storage;
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int amount,Charecter charecter = null)
     {
 
     }

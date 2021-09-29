@@ -71,7 +71,7 @@ public abstract class Charecter : MonoBehaviour
         healthCurrent += amount;
     }
 
-    public virtual void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount,Charecter attacker = null)
     {
         healthCurrent -= amount;
         if(healthCurrent <= 0)

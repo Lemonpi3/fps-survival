@@ -32,10 +32,19 @@ public class Villager : Charecter
     }
 
     //<<<<<<<<<<<<<<<<<<---------Villager Interactions-------->>>>>>>>>>>>>>>>>
-    public void FollowPlayer(Player player)
+    public void FollowCharecter(Charecter charecter)
     {
-        villagerAI.target = player.gameObject;
+        villagerAI.target = charecter.gameObject;
         AddTask("Follow");
+    }
+
+    public override void TakeDamage(int amount, Charecter attacker = null)
+    {
+        base.TakeDamage(amount, attacker);
+        if(attacker != null)
+        {
+            AddTask("Flee");
+        }
     }
 
     //<<<<<<<<<<<<<<<<<<-------------Build Functions---------->>>>>>>>>>>>>>>>>
@@ -77,6 +86,7 @@ public class Villager : Charecter
             TakeHungerDamage(feedStatus);
         }
     }
+
     public bool hasEaten()
     {
         return foodAmount >= maxFoodAmount;
@@ -154,7 +164,7 @@ public class Villager : Charecter
         foodAmountToStartFeeding = villagerData.AmountToStartFeeding();
     }
 
-    //<<<<<<<<<<<<<<<<<<<<<------------SETUP & ChangeTeam--------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //<<<<<<<<<<<<<<<<<<<<<------------SETUP & Utils--------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
     public void InitializeVillager()
     {
@@ -211,13 +221,13 @@ public class Villager : Charecter
         }
     }
 
-    public void SetBeacon(MainBeacon _teamBeacon)
+    public void SetBeacon(Team team)
     {
-        villagerAI.SetPlayerBeacon(_teamBeacon.villagersZone);
+        villagerAI.SetPlayerBeacon(team);
     }
 
-    public void SetTabern()
+    public void SetTabern(Team team)
     {
-
+        villagerAI.SetTabern(team);
     }
 }

@@ -5,15 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="Item",menuName = "Items/Test/New Item")]
 public class Item : ScriptableObject
 {
-   
-    [SerializeField] private int _stackSizePlayer = 1;
-    [SerializeField] private int _stackSizeGatherer = 1;
-    [SerializeField] private int _stackSizeStorage = 1;
-    [SerializeField] private int _stackSizeVendor = 1;
+    [SerializeField] string _itemName;
+    public string itemName => _itemName;
 
     [SerializeField]
     private Sprite _icon;
     public Sprite icon => _icon;
+
+    [SerializeField] private int _stackSizePlayer = 1;
+    [SerializeField] private int _stackSizeGatherer = 1;
+    [SerializeField] private int _stackSizeStorage = 1;
+    [SerializeField] private int _stackSizeVendor = 1;
 
     public int GetStackSize(StorageType storageType)
     {

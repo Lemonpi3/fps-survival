@@ -15,9 +15,8 @@ public class VillagerInteractable : Interactable
     {
         if (charecter.GetComponent<Player>() == null) { return; }
         base.Interact(charecter);
-        Player player = charecter.GetComponent<Player>();      //ineficient needs change in future
-        villager.FollowPlayer(player);
-        villager.SetBeacon(player.GetBeacon());
+        villager.FollowCharecter(charecter);
+        villager.SetBeacon(charecter.team);
         gameObject.SetActive(false);
     }
 }

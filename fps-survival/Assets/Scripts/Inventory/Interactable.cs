@@ -19,7 +19,6 @@ public abstract class Interactable : MonoBehaviour
         if(interactor.tag == "Team1"|| interactor.tag == "Team2")
         {
             isPlayer = true;
-            interactor = charecter as Player;
         }
     }
 

@@ -9,7 +9,7 @@ public class Storage : Interactable
 
     [SerializeField] Transform interactorInventoryPos;
     [SerializeField] int storageAmount = 70;
-
+    
     Inventory interactorInventory;
 
     public Item testItem;
@@ -34,7 +34,7 @@ public class Storage : Interactable
         }
 
         interactorInventory = charecter.GetInventory();
-        UIManager.instance.ToggleStorageInventory();
+        UIManager.instance.ToggleMenu(storageUI.gameObject);
         interactorInventory.ChangeInventoryUIPos(interactorInventoryPos.position);
         storageInventory.ShowSomeSlots(storageAmount);
     }
@@ -42,7 +42,7 @@ public class Storage : Interactable
     public override void StopInteracting()
     {
         interactorInventory.ResetInventoryUIPos();
-        UIManager.instance.ToggleStorageInventory();
+        UIManager.instance.ToggleMenu(storageUI.gameObject);
         interactorInventory = null;
         base.StopInteracting();
     }

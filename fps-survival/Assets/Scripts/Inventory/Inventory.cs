@@ -26,6 +26,8 @@ public class Inventory : MonoBehaviour
         ShowSomeSlots(currentInventorySize);
     }
 
+    //<<<<<<<<<<<----------Inventory Main Functions------->>>>>>>>>>
+    #region Inventory Functions
     public void CreateSlots(int amount=0)
     {
         if(maxInventorySize <= 0 || inventoryUI == null) { return; }
@@ -174,26 +176,10 @@ public class Inventory : MonoBehaviour
 
         AddItem(item, itemToAdd[item]);
     }
+    #endregion
 
-    public void LoadInventoryUI()
-    {
-        owner = GetComponent<Charecter>();
-        if(slotParentUI.slots.Count != maxInventorySize && inventoryUI != null)
-        {
-            CreateSlots(maxInventorySize);
-        }
-    }
-
-    public void ChangeInventoryUIPos(Vector3 newPos)
-    {
-        inventoryUI.ChangeInventoryPos(newPos);
-    }
-    
-    public void ResetInventoryUIPos()
-    {
-        inventoryUI.ResetPos();
-    }
-
+    //<<<<<<<<<<<<<----------Utils Functions----------->>>>>>>>>>
+    #region Inventory Utils Functions
     /// <summary>
     /// Sets the user of the inventoryUI, and can set a new ownership from an existing inventory
     /// </summary>
@@ -208,8 +194,36 @@ public class Inventory : MonoBehaviour
         return owner;
     }
 
+    public GameObject GetInventoryUI()
+    {
+        return inventoryUI.gameObject;
+    }
+    #endregion
+
+    //<<<<<<<<<<<<<<<<<<<-------------INVENTORY UI Functions----------------->>>>>>>>>>>>>>
+    #region InventoryUI Functions
+    public void LoadInventoryUI()
+    {
+        owner = GetComponent<Charecter>();
+        if (slotParentUI.slots.Count != maxInventorySize && inventoryUI != null)
+        {
+            CreateSlots(maxInventorySize);
+        }
+    }
+
+    public void ChangeInventoryUIPos(Vector3 newPos)
+    {
+        inventoryUI.ChangeInventoryPos(newPos);
+    }
+
+    public void ResetInventoryUIPos()
+    {
+        inventoryUI.ResetPos();
+    }
+
     public void ShowSomeSlots(int amount)
     {
         slotParentUI.ShowASetAmountOfSlots(amount);
     }
+    #endregion
 }

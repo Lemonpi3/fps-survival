@@ -11,25 +11,35 @@ public class ResourceNode : MonoBehaviour
     [SerializeField] private Resource_Type resource_Type;
     [SerializeField] private Item resourceItem;
 
-    private void Start()
+
+    public void InitializeNode(Resource resItem)
     {
+        resource_Type = resItem.resource_Type;
+        resourceTier = resItem.resourceTier;
+        maxResourceAmount = resItem.resourceAmount;
         currentAmount = maxResourceAmount;
-        //respawn set up
+        resourceItem = resItem;
+        gameObject.name = resourceItem.itemName;
     }
 
-    public int GatherResource(Resource_Type toolResourceType,int toolGatherTier,int amountToExtract) //temp
+    public Dictionary<Item,int> GatherResource(Resource_Type toolResourceType,int toolGatherTier,int amountToExtract) //temp
     {
         if (toolResourceType == resource_Type || toolResourceType == Resource_Type.All && toolGatherTier >= resourceTier)
         {
             currentAmount -= amountToExtract + amountToExtract * (toolGatherTier - resourceTier)/2;
+            int amountToGive = amountToExtract;
+
             if (currentAmount <= 0)
             {
+                amountToGive = amountToExtract + currentAmount;
                 Destroy(gameObject, 0.5f);
             }
-            return amountToExtract;
+            Dictionary<Item, int> resToReturn = new Dictionary<Item, int>();
+            resToReturn.Add(resourceItem, amountToGive) ;
+            return resToReturn;
         }
         else
             Debug.Log("Tool Cant Gather: " + gameObject.name + " T" + resourceTier + " resourceType: " + resource_Type);
-            return 0;
+        return null;
     }
 }

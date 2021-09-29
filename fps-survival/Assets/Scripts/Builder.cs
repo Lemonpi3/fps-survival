@@ -20,11 +20,8 @@ public class Builder : Interactable
 
         base.Interact(charecter);
         player = charecter.GetComponent<Player>();
-        UIManager.instance.ToggleBuilderUI();
-        builderUI.SetBuilder(this);
-        inventory = player.GetBeaconInventory();
-        alternativeInventory = player.GetInventory();
-        team = player.team;
+        UIManager.instance.ToggleMenu(builderUI.gameObject);
+        InitializeBuilder();
     }
 
     protected override void Update()
@@ -34,7 +31,15 @@ public class Builder : Interactable
 
     public override void StopInteracting()
     {
-        UIManager.instance.ToggleBuilderUI();
+        UIManager.instance.ToggleMenu(builderUI.gameObject);
         base.StopInteracting();
+    }
+
+    public void InitializeBuilder()
+    {
+        builderUI.SetBuilder(this);
+        inventory = GameManager.instance.GetBeaconInventory(player.team);
+        alternativeInventory = player.GetInventory();
+        team = player.team;
     }
 }

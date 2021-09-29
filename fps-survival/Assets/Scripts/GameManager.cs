@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
             RespawnVillager();
             CheckTeamsVillagersFullness();
         }
+        ResourceSpawner.instance.UpdateNodes();
     }
 
     public void CheckTeamsVillagersFullness()
@@ -208,6 +209,61 @@ public class GameManager : MonoBehaviour
                 Instantiate(villagerPrefab, villagerSpawnPoint.position, Quaternion.identity, villagerSpawnPoint).GetComponent<Villager>();
             }
         }
+    }
+
+    public MainBeacon GetBeacon(Team team)
+    {
+        if(team == Team.Team1)
+        {
+            return beaconTeam1;
+        }
+        if (team == Team.Team2)
+        {
+            return beaconTeam2;
+        }
+        else return null;
+    }
+
+    public Inventory GetBeaconInventory(Team team)
+    {
+        if (team == Team.Team1)
+        {
+            return beaconTeam1.GetInventory();
+        }
+        if (team == Team.Team2)
+        {
+            return beaconTeam2.GetInventory();
+        }
+        else return null;
+    }
+
+    public Tabern GetTabern(Team team)
+    {
+        if (team == Team.Team1)
+        {
+            foreach(Building building in team1Buildings)
+            {
+                if(building.GetComponent<Tabern>() != null)
+                {
+                    return building.GetComponent<Tabern>();
+                }
+            }
+            return null;
+        }
+
+        if (team == Team.Team2)
+        {
+            foreach (Building building in team2Buildings)
+            {
+                if (building.GetComponent<Tabern>() != null)
+                {
+                    return building.GetComponent<Tabern>();
+                }
+            }
+            return null;
+        }
+
+        else return null;
     }
 }
 

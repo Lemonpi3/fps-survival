@@ -19,7 +19,7 @@ public class VillagerAI : NpcAI
         villager = GetComponent<Villager>();
         npcData = villager.GetNpcData();
         villageCenter = GameManager.instance.villagerSpawnPoint;
-        VillagerInteractable villagerInteractable = GetComponentInChildren<VillagerInteractable>();
+        villagerInteractable = GetComponentInChildren<VillagerInteractable>();
         base.Start();
         InvokeRepeating("Think", 0, aiTickTime);
     }
@@ -158,13 +158,20 @@ public class VillagerAI : NpcAI
         startingPos = newStartPos;
     }
 
-    public void SetPlayerBeacon(Transform _teamBeacon)
+    public void SetPlayerBeacon(Team team)
     {
-        teamBeacon = _teamBeacon;
+        teamBeacon = GameManager.instance.GetBeacon(team).transform;
+    }
+
+    public void SetTabern(Team team)
+    {
+        tabern = GameManager.instance.GetTabern(team);
     }
 
     public void ChangeTeam(Team _team)
     {
         team = _team;
+        SetPlayerBeacon(team);
+        SetTabern(team);
     }
 }
