@@ -22,4 +22,17 @@ public class Resource : Item
     [SerializeField]
     int _respawnTimeDays;
     public int respawnTimeDays => _respawnTimeDays;
+
+    [Header("GFX Settings")]
+    [SerializeField]
+    GameObject _GFX;
+    public GameObject GFX => _GFX;
+
+    [SerializeField,Min(0), Tooltip("base scale + base scale * random(0,scale)")]
+    float _maxHeightScaleVariation = 0.1f;
+    public float maxHeightScaleVariation => _maxHeightScaleVariation;
+
+    [SerializeField, Min(0), Tooltip("base scale + base scale * random(0,scale)")]
+    float _maxWidthScaleVariation = 0;
+    public float maxWidthScaleVariation => _maxWidthScaleVariation;
 }

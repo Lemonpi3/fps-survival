@@ -141,7 +141,7 @@ public class Weapon : MonoBehaviour
             }
             else if(target.tag == "Resource")
             {
-                Debug.Log(target.GetComponent<ResourceNode>().GatherResource(mainGatherType, mainGatherTier, mainDamageToResource));
+                Debug.Log(target.GetComponentInParent<ResourceNode>().GatherResource(mainGatherType, mainGatherTier, mainDamageToResource));
             }
         }
         else

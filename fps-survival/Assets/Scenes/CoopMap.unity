@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 192177465}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PossibleBaseSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,8 +162,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 298435873}
-  m_Layer: 0
-  m_Name: Wood
+  m_Layer: 3
+  m_Name: Minerals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -351,7 +351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 607052356}
   - component: {fileID: 607052355}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TerrainGroup_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -395,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 976210846}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Village
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +425,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 999851142}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Resources
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1008154631}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Trees
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 1160531661}
   - component: {fileID: 1160531663}
   - component: {fileID: 1160531662}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Terrain_0_0_534a89f3-74d4-4517-961c-48e7cce4ff2a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,7 +523,7 @@ TerrainCollider:
   m_Material: {fileID: 0}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: e23edd238db0b3341805c752fa7e6647, type: 2}
-  m_EnableTreeColliders: 1
+  m_EnableTreeColliders: 0
 --- !u!218 &1160531663
 Terrain:
   m_ObjectHideFlags: 0
@@ -963,7 +963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5337424968532291280, guid: b65391c25e7890648bed4ba4381f97d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5337424968532291280, guid: b65391c25e7890648bed4ba4381f97d6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1002,8 +1002,24 @@ PrefabInstance:
       value: ResourceSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 7050297853788851608, guid: b65391c25e7890648bed4ba4381f97d6, type: 3}
-      propertyPath: resourceNodesAmount
+      propertyPath: spawnRange
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050297853788851608, guid: b65391c25e7890648bed4ba4381f97d6, type: 3}
+      propertyPath: woodParent
+      value: 
+      objectReference: {fileID: 1008154631}
+    - target: {fileID: 7050297853788851608, guid: b65391c25e7890648bed4ba4381f97d6, type: 3}
+      propertyPath: stoneParent
+      value: 
+      objectReference: {fileID: 298435873}
+    - target: {fileID: 7050297853788851608, guid: b65391c25e7890648bed4ba4381f97d6, type: 3}
+      propertyPath: maxHeightSpawn
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050297853788851608, guid: b65391c25e7890648bed4ba4381f97d6, type: 3}
+      propertyPath: resourceNodesAmount
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65391c25e7890648bed4ba4381f97d6, type: 3}

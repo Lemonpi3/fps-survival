@@ -11,7 +11,6 @@ public class ResourceNode : MonoBehaviour
     [SerializeField] private Resource_Type resource_Type;
     [SerializeField] private Item resourceItem;
 
-
     public void InitializeNode(Resource resItem)
     {
         resource_Type = resItem.resource_Type;
@@ -20,6 +19,15 @@ public class ResourceNode : MonoBehaviour
         currentAmount = maxResourceAmount;
         resourceItem = resItem;
         gameObject.name = resourceItem.itemName;
+
+        Instantiate(resItem.GFX, transform.position,Quaternion.identity, transform);
+
+        float yScale = Random.Range(0, resItem.maxHeightScaleVariation);
+        float xScale = Random.Range(0, resItem.maxWidthScaleVariation);
+
+        transform.localScale = new Vector3(transform.localScale.x + transform.localScale.x * xScale,
+                                           transform.localScale.y + transform.localScale.y * yScale, 
+                                           transform.localScale.z + transform.localScale.z * xScale);
     }
 
     public Dictionary<Item,int> GatherResource(Resource_Type toolResourceType,int toolGatherTier,int amountToExtract) //temp

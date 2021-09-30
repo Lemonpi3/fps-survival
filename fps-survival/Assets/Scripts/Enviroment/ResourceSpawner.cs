@@ -17,8 +17,13 @@ public class ResourceSpawner : MonoBehaviour
 
     [SerializeField] int resourceNodesAmount;
     [SerializeField] float spawnRange;
+    [SerializeField] float maxHeightSpawn = 100;
     [SerializeField] GameObject spawnNodePrefab;
 
+    [SerializeField] Transform woodParent;
+    [SerializeField] Transform stoneParent;
+
+    [Header("Spawn Rates Settings")]
     [SerializeField]
     float T0WeightChance;
     [SerializeField] Resource[] resourcesT0;
@@ -58,18 +63,24 @@ public class ResourceSpawner : MonoBehaviour
         for (int i = 0; i < resourceNodesAmount; i++)
         {
             float rng = Random.Range(0, totalChance);
-            float xrng = Random.Range(-transform.position.x - spawnRange, transform.position.x + spawnRange);
-            float zrng = Random.Range(-transform.position.z - spawnRange, transform.position.z + spawnRange);
-            Vector3 nodeSpawnPos = new Vector3(xrng, 0, zrng);
+            float xrng = Random.Range(- spawnRange,  + spawnRange);
+            float zrng = Random.Range(- spawnRange,  + spawnRange);
+            Vector3 nodeSpawnPos = new Vector3(xrng+transform.position.x, maxHeightSpawn, zrng+transform.position.z);
 
             float currentChance = T0WeightChance;
             //T0
             if (rng < currentChance)
             {
                 if (resourcesT0.Length == 0) { continue; }
-                ResourceSpawnNode resourceSpawnNode = Instantiate(spawnNodePrefab, nodeSpawnPos, Quaternion.identity, transform).GetComponent<ResourceSpawnNode>();
+
                 int resRng = Random.Range(0, resourcesT0.Length);
-                resourceSpawnNode.SetRes(resourcesT0[resRng]);
+
+                if (resourcesT0[resRng].resource_Type == Resource_Type.Wood)
+                {
+                    InstantiateRes(nodeSpawnPos, resourcesT0[resRng], woodParent);
+                }
+                else InstantiateRes(nodeSpawnPos, resourcesT0[resRng], stoneParent);
+
                 continue;
             }
             currentChance += T1WeightChance;
@@ -77,9 +88,15 @@ public class ResourceSpawner : MonoBehaviour
             if (rng < currentChance)
             {
                 if (resourcesT1.Length == 0) { continue; }
-                ResourceSpawnNode resourceSpawnNode = Instantiate(spawnNodePrefab, nodeSpawnPos, Quaternion.identity, transform).GetComponent<ResourceSpawnNode>();
+
                 int resRng = Random.Range(0, resourcesT1.Length);
-                resourceSpawnNode.SetRes(resourcesT1[resRng]);
+
+                if (resourcesT1[resRng].resource_Type == Resource_Type.Wood)
+                {
+                    InstantiateRes(nodeSpawnPos, resourcesT1[resRng], woodParent);
+                }
+                else InstantiateRes(nodeSpawnPos, resourcesT1[resRng], stoneParent);
+
                 continue;
             }
             currentChance += T2WeightChance;
@@ -87,9 +104,15 @@ public class ResourceSpawner : MonoBehaviour
             if (rng < currentChance)
             {
                 if (resourcesT2.Length == 0) { continue; }
-                ResourceSpawnNode resourceSpawnNode = Instantiate(spawnNodePrefab, nodeSpawnPos, Quaternion.identity, transform).GetComponent<ResourceSpawnNode>();
+
                 int resRng = Random.Range(0, resourcesT2.Length);
-                resourceSpawnNode.SetRes(resourcesT2[resRng]);
+
+                if (resourcesT2[resRng].resource_Type == Resource_Type.Wood)
+                {
+                    InstantiateRes(nodeSpawnPos, resourcesT2[resRng], woodParent);
+                }
+                else InstantiateRes(nodeSpawnPos, resourcesT2[resRng], stoneParent);
+
                 continue;
             }
             currentChance += T3WeightChance;
@@ -97,9 +120,15 @@ public class ResourceSpawner : MonoBehaviour
             if (rng < currentChance)
             {
                 if (resourcesT3.Length == 0) { continue; }
-                ResourceSpawnNode resourceSpawnNode = Instantiate(spawnNodePrefab, nodeSpawnPos, Quaternion.identity, transform).GetComponent<ResourceSpawnNode>();
+
                 int resRng = Random.Range(0, resourcesT3.Length);
-                resourceSpawnNode.SetRes(resourcesT3[resRng]);
+
+                if (resourcesT3[resRng].resource_Type == Resource_Type.Wood)
+                {
+                    InstantiateRes(nodeSpawnPos, resourcesT3[resRng], woodParent);
+                }
+                else InstantiateRes(nodeSpawnPos, resourcesT3[resRng], stoneParent);
+
                 continue;
             }
             currentChance += T4WeightChance;
@@ -107,9 +136,14 @@ public class ResourceSpawner : MonoBehaviour
             if (rng <= currentChance)
             {
                 if (resourcesT4.Length == 0) { continue; }
-                ResourceSpawnNode resourceSpawnNode = Instantiate(spawnNodePrefab, nodeSpawnPos, Quaternion.identity, transform).GetComponent<ResourceSpawnNode>();
+
                 int resRng = Random.Range(0, resourcesT4.Length);
-                resourceSpawnNode.SetRes(resourcesT4[resRng]);
+
+                if(resourcesT4[resRng].resource_Type == Resource_Type.Wood)
+                {
+                    InstantiateRes(nodeSpawnPos, resourcesT4[resRng], woodParent);
+                }else InstantiateRes(nodeSpawnPos, resourcesT4[resRng], stoneParent);
+
                 continue;
             }
         }
@@ -123,9 +157,15 @@ public class ResourceSpawner : MonoBehaviour
         }
     }
 
+    void InstantiateRes(Vector3 nodeSpawnPos,Resource res,Transform parentTransform)
+    {
+        ResourceSpawnNode resourceSpawnNode = Instantiate(spawnNodePrefab, nodeSpawnPos, Quaternion.identity, parentTransform).GetComponent<ResourceSpawnNode>();
+        resourceSpawnNode.SetRes(res);
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, spawnRange);
+        Gizmos.DrawWireCube(new Vector3(transform.position.x, transform.position.y+(maxHeightSpawn * 0.5f),transform.position.z), new Vector3(spawnRange *2, maxHeightSpawn, spawnRange*2));
     }
 }

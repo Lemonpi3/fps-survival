@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e8097038ea2d354eb3fc08669ea01f0, type: 3}
   m_Name: T1Wood
   m_EditorClassIdentifier: 
-  _itemName: T1
+  _itemName: T1 Wood
   _icon: {fileID: 0}
   _stackSizePlayer: 1
   _stackSizeGatherer: 1
@@ -22,3 +22,6 @@ MonoBehaviour:
   _resoruceTier: 0
   _resourceAmount: 100
   _respawnTimeDays: 2
+  _GFX: {fileID: 918449491840615225, guid: f3e3d3dc189beb9438f0108a431875ee, type: 3}
+  _maxHeightScaleVariation: 1
+  _maxWidthScaleVariation: 0.2

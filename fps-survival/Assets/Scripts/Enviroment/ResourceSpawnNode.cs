@@ -17,12 +17,20 @@ public class ResourceSpawnNode : MonoBehaviour
         daysToRespawn = res.respawnTimeDays;
         dayTimer = 0;
         ResourceSpawner.instance.allspawnNodes.Add(this);
-        gameObject.name = resource.itemName;
+        gameObject.name ="Spawner of " + resource.itemName;
     }
+
     private void Start()
     {
         SphereCollider sphere = GetComponent<SphereCollider>();
         sphere.enabled = false;
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit,Mathf.Infinity, LayerMask.GetMask("Ground")))
+        {
+            transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+        }
+        else RemoveSpawnPoint();
     }
 
     public void UpdateNode()
@@ -44,14 +52,17 @@ public class ResourceSpawnNode : MonoBehaviour
     {
         if(other.tag == "Resource")
         {
-            if (ResourceSpawner.instance.allspawnNodes.Contains(this))
-            {
-                ResourceSpawner.instance.allspawnNodes.Remove(this);
-                ResourceSpawner.instance.allspawnNodes.TrimExcess();
-            }
-            Destroy(gameObject);
+            RemoveSpawnPoint();
         }
     }
 
-   
+   public void RemoveSpawnPoint()
+   {
+        if (ResourceSpawner.instance.allspawnNodes.Contains(this))
+        {
+            ResourceSpawner.instance.allspawnNodes.Remove(this);
+            ResourceSpawner.instance.allspawnNodes.TrimExcess();
+        }
+        Destroy(gameObject);
+   }
 }
