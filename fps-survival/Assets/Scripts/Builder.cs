@@ -20,6 +20,7 @@ public class Builder : Interactable
 
         base.Interact(charecter);
         player = charecter.GetComponent<Player>();
+        builderUI = player.GetComponent<PlayerUI>().builderUI;
         UIManager.instance.ToggleMenu(builderUI.gameObject);
         InitializeBuilder();
     }

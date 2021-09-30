@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Player : Charecter
 {
@@ -27,16 +28,18 @@ public class Player : Charecter
     {
         base.Start();
         LoadWeapons();
-        /*if (!IsLocalPlayer)
+        if (!IsLocalPlayer)
         {
             GetComponent<RigidbodyFirstPersonController>().enabled = false;
             Destroy(transform.Find("Camera").gameObject);
+            GetComponent<PlayerUI>().DestroyNonLocalUI();
             return;
-        }*/
+        }
         inventory = GetComponent<Inventory>();
         cam = GetComponentInChildren<Camera>();
         GameManager.instance.AddPlayerToTeam(this);
         _respawnPos = playerBeacon.playerRespawn;
+        transform.position = _respawnPos.position;
     }
 
     protected override void Update()

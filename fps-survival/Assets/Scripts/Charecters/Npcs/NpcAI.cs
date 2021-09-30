@@ -25,7 +25,11 @@ public abstract class NpcAI : MonoBehaviour
     [SerializeField]
     protected float roamRange;
     [SerializeField]
-    protected float roamTimeInterval = 30f;
+    protected float minRoamTimeInterval = 5f;
+    [SerializeField]
+    protected float maxRoamTimeInterval = 15f;
+
+    protected float roamTimeInterval;
 
     protected float distanceToTar;
     protected float roamTimer;
@@ -40,7 +44,7 @@ public abstract class NpcAI : MonoBehaviour
     
     protected virtual void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        
         SetupAgent();
     }
 
@@ -99,6 +103,7 @@ public abstract class NpcAI : MonoBehaviour
 
     protected virtual void SetupAgent()
     {
+        agent = GetComponent<NavMeshAgent>();
         agent.speed = npcData.moveSpeed;
 
         sightRange = npcData.sightRange;
@@ -106,6 +111,7 @@ public abstract class NpcAI : MonoBehaviour
 
         roamRange = npcData.roamRange;
         canRoam = npcData.canRoam;
+        roamTimeInterval = Random.Range(minRoamTimeInterval, maxRoamTimeInterval);
 
         startingPos = transform.position;
         team = npcData.team;

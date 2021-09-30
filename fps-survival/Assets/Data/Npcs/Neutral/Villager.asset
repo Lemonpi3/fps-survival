@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _charecterName: 
   _team: 2
-  _healthMax: 1
+  _healthMax: 10
   _npc_type: 0
   _npcMesh: {fileID: 0}
   _canRoam: 1
   _dropsLoot: 0
   _moveSpeed: 8
-  _roamRange: 10
+  _roamRange: 25
   _attackRange: 2
   _sightRange: 5
   _attack_TYPE: 0

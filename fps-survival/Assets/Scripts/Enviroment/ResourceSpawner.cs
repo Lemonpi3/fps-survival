@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//This class is in charge of initializing and updateing the resourceNodes spawners
+
 public class ResourceSpawner : MonoBehaviour
 {
     public static ResourceSpawner instance;
@@ -60,7 +62,7 @@ public class ResourceSpawner : MonoBehaviour
     public void SpawnNodes(int amount)
     {
         float totalChance = T0WeightChance + T1WeightChance + T2WeightChance + T3WeightChance + T4WeightChance;
-        for (int i = 0; i < resourceNodesAmount; i++)
+        for (int i = 0; i < amount; i++)
         {
             float rng = Random.Range(0, totalChance);
             float xrng = Random.Range(- spawnRange,  + spawnRange);

@@ -22,8 +22,11 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        LoadInventoryUI();
-        ShowSomeSlots(currentInventorySize);
+        if(inventoryUI != null)
+        {
+            LoadInventoryUI();
+            ShowSomeSlots(currentInventorySize);
+        }
     }
 
     //<<<<<<<<<<<----------Inventory Main Functions------->>>>>>>>>>

@@ -1,6 +1,7 @@
 using UnityEngine;
+using MLAPI;
 
-public abstract class Charecter : MonoBehaviour
+public abstract class Charecter : NetworkBehaviour
 {
     [SerializeField]
     protected CharecterData charecterData;

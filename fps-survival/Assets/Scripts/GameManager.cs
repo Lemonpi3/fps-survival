@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MLAPI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
     public static GameManager instance;
 
@@ -61,8 +62,6 @@ public class GameManager : MonoBehaviour
     }
 
     [Header("Beacons")]
-    public GameObject beaconPrefab;
-
     public MainBeacon beaconTeam1;
     public MainBeacon beaconTeam2;
 
@@ -82,10 +81,24 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        beaconTeam1.GetComponent<Charecter>().ChangeTeam(Team.Team1);
-        if(beaconTeam2 != null)
+        InitializeStructures();
+    }
+
+    public void InitializeStructures()
+    {
+        BasesSpawners basesSpawners = GetComponent<BasesSpawners>();
+
+        basesSpawners.SpawnVillage();
+        if (gameMode == GameMode.Single || gameMode == GameMode.CoOp)
         {
+            basesSpawners.SpawnBeacon(1);
+            beaconTeam1.GetComponent<Charecter>().ChangeTeam(Team.Team1);
+        }
+        else
+        {
+            basesSpawners.SpawnBeacon(2);
             beaconTeam2.GetComponent<Charecter>().ChangeTeam(Team.Team2);
+
         }
     }
 

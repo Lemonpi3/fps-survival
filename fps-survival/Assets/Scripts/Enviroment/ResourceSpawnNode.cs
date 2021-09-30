@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//This class handles the spawn and respawn of a resourceNode
+//When the gameObj with this class is initialized it will cast a raycast downwards, if it hits ground it will set its position to the hit pos, if it doesnt it will destroy itself.
+//If it doesn't have a resource node it will respawn it after X days(its based on the res)
+
 public class ResourceSpawnNode : MonoBehaviour
 {
     [SerializeField] GameObject resourceNodePrefab;
@@ -26,11 +30,15 @@ public class ResourceSpawnNode : MonoBehaviour
         sphere.enabled = false;
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit,Mathf.Infinity, LayerMask.GetMask("Ground")))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit,Mathf.Infinity))
         {
-            transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+            if(hit.collider.tag == "Ground")
+            {
+                transform.position = new Vector3(transform.position.x, hit.point.y, transform.position.z);
+                return;
+            }
         }
-        else RemoveSpawnPoint();
+        RemoveSpawnPoint();
     }
 
     public void UpdateNode()
