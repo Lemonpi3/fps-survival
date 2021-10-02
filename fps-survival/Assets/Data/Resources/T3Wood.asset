@@ -19,7 +19,7 @@ MonoBehaviour:
   _stackSizeStorage: 1
   _stackSizeVendor: 1
   _resource_Type: 0
-  _resoruceTier: 0
+  _resoruceTier: 3
   _resourceAmount: 100
   _respawnTimeDays: 2
   _GFX: {fileID: 5631978209607364541, guid: f060ade42ddf34c479d2555b93b52395, type: 3}

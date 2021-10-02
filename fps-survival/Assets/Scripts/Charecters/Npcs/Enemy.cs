@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Enemy : Charecter
 {
-    public NpcData npcData;
+    public EnemyData enemyData;
 
     [SerializeField]
     private float attackSpeed;
     [SerializeField]
     private int damage;
-    [SerializeField]
+
     private GameObject rangedAttackProyectile;
 
 
@@ -22,17 +22,17 @@ public class Enemy : Charecter
     {
         base.Start();
         enemyAI = GetComponent<EnemyAI>();
-        enemyAI.npcData = npcData;
+        enemyAI.npcData = enemyData;
     }
 
     protected override void SetCharecterDefaultStats()
     {
-        _maxHealth = npcData.healthMax;
+        _maxHealth = enemyData.healthMax;
         _healthCurrent = _maxHealth;
-        team = npcData.team;
-        damage = npcData.damage;
-        attackSpeed = npcData.attackSpeed;
-        attack_TYPE = npcData.attack_TYPE;
+        team = enemyData.team;
+        damage = enemyData.damage;
+        attackSpeed = enemyData.attackSpeed;
+        attack_TYPE = enemyData.attack_TYPE;
     }
 
     public void Attacking(Charecter target,float aiTickTime)
@@ -57,8 +57,15 @@ public class Enemy : Charecter
         }
     }
 
+    protected override void Die()
+    {
+        GameManager.instance.currentEnemyCount--;
+        DropLoot();
+        base.Die();
+    }
+
     protected override void DropLoot()
     {
-
+        enemyData.DropLoot(transform.position);
     }
 }

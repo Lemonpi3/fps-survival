@@ -22,8 +22,17 @@ public class GameManager : NetworkBehaviour
     public bool isSurvival;
     [SerializeField] int daysToSurvive = 5;
 
-    public bool respawnEnabled = true;
+    [Header("Enemies Spawn")]
+    public List<EnemySpawner> enemySpawners = new List<EnemySpawner>();
+    public List<EnemyData> allEnemiesData = new List<EnemyData>();
 
+    public float defaultEnemySpawnRange = 100;
+
+    public int maxEnemyCount = 25;
+    public int currentEnemyCount;
+
+    [Header("Respawn Settings")]
+    public bool respawnEnabled = true;
     [SerializeField] float baseRespawnTime = 1;
     [SerializeField] float maxRespawnTime = 30;
 
@@ -82,6 +91,7 @@ public class GameManager : NetworkBehaviour
     private void Start()
     {
         InitializeStructures();
+        RespawnVillagers();
     }
 
     public void InitializeStructures()
@@ -143,7 +153,7 @@ public class GameManager : NetworkBehaviour
         }
         if(wildVillagers.Count != maxVillagerCount)
         {
-            RespawnVillager();
+            RespawnVillagers();
             CheckTeamsVillagersFullness();
         }
         ResourceSpawner.instance.UpdateNodes();
@@ -212,7 +222,7 @@ public class GameManager : NetworkBehaviour
         player.SetBeacon();
     }
 
-    public void RespawnVillager()
+    public void RespawnVillagers()
     {
         int villagersTotal = wildVillagers.Count + team1Villagers.Count + team2Villagers.Count;
         if (villagersTotal < maxVillagerCount)
@@ -220,6 +230,21 @@ public class GameManager : NetworkBehaviour
             for (int i = 0; i < maxVillagerCount-villagersTotal; i++)
             {
                 Instantiate(villagerPrefab, villagerSpawnPoint.position, Quaternion.identity, villagerSpawnPoint).GetComponent<Villager>();
+            }
+        }
+    }
+
+    public void SpawnEnemies()
+    {
+        int amountToSpawn = maxEnemyCount - currentEnemyCount;
+
+        if(amountToSpawn == 0) { return; }
+
+        for (int i = 0; i < amountToSpawn; i++)
+        {
+            foreach(EnemySpawner spawner in enemySpawners)
+            {
+                spawner.SpawnEnemy();
             }
         }
     }

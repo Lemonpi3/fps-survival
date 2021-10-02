@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e8097038ea2d354eb3fc08669ea01f0, type: 3}
-  m_Name: T4Wood
+  m_Name: T3Stone
   m_EditorClassIdentifier: 
-  _itemName: T4 Wood
+  _itemName: T3 stone
   _icon: {fileID: 0}
-  _stackSizePlayer: 1
+  _stackSizePlayer: 64
   _stackSizeGatherer: 1
-  _stackSizeStorage: 1
-  _stackSizeVendor: 1
-  _resource_Type: 0
-  _resoruceTier: 4
+  _stackSizeStorage: 128
+  _stackSizeVendor: 999
+  _resource_Type: 1
+  _resoruceTier: 3
   _resourceAmount: 100
   _respawnTimeDays: 2
-  _GFX: {fileID: 1215446705407513682, guid: cbed390fe4816a144a29d2505584a93c, type: 3}
-  _maxHeightScaleVariation: 1
-  _maxWidthScaleVariation: 1
+  _GFX: {fileID: 413899537894898422, guid: d71a9eb4a8a7db840a3796d68d18cfd2, type: 3}
+  _maxHeightScaleVariation: 0.1
+  _maxWidthScaleVariation: 0

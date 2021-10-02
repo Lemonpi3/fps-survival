@@ -21,6 +21,11 @@ public class DayNightManager : MonoBehaviour
             counter = 0;
             GameManager.instance.NextDay();
         }
+
+        if(!isDay && Mathf.Round(counter) % 30 == 0)
+        {
+            GameManager.instance.SpawnEnemies();
+        }
     
         sunTransform.rotation = Quaternion.Euler(counter, sunTransform.rotation.y, sunTransform.rotation.z);
     }
