@@ -22,6 +22,6 @@ MonoBehaviour:
   _resoruceTier: 0
   _resourceAmount: 100
   _respawnTimeDays: 2
-  _GFX: {fileID: 9054298838012283447, guid: d92d6d594b5aa3d4291aecec6e90a2d2, type: 3}
+  _GFX: {fileID: 93431612460726349, guid: a947f53faab54ff42a95bf6216e4e8da, type: 3}
   _maxHeightScaleVariation: 0.5
   _maxWidthScaleVariation: 0.3

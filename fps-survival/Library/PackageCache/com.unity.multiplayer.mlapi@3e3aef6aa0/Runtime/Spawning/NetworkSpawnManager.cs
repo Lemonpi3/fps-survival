@@ -666,7 +666,7 @@ namespace MLAPI.Spawning
             //Removal of spawned object
             if (!SpawnedObjects.ContainsKey(networkId))
             {
-                Debug.LogWarning($"Trying to destroy object {networkId} but it doesn't seem to exist anymore!");
+                //Debug.LogWarning($"Trying to destroy object {networkId} but it doesn't seem to exist anymore!");
                 return;
             }
 
