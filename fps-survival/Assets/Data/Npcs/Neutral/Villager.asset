@@ -18,19 +18,10 @@ MonoBehaviour:
   _npc_type: 0
   _npcMesh: {fileID: 0}
   _canRoam: 1
-  _dropsLoot: 0
   _moveSpeed: 8
-  _roamRange: 25
+  _roamRange: 12
   _attackRange: 2
   _sightRange: 5
-  _attack_TYPE: 0
-  _damage: 0
-  _attackSpeed: 0
-  _rangedProyectile: {fileID: 0}
-  _commonLoot: []
-  _uncommonLoot: []
-  _rareLoot: []
-  _veryRateLoot: []
   _names:
   - Timmy
   - Chad

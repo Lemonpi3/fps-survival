@@ -141,7 +141,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &2929278525800062061
 MonoBehaviour:
@@ -184,7 +184,8 @@ MonoBehaviour:
   stopRange: 0
   canRoam: 0
   roamRange: 0
-  roamTimeInterval: 30
+  minRoamTimeInterval: 5
+  maxRoamTimeInterval: 15
   antiBumpCollider: {fileID: 8770193198628783169}
 --- !u!114 &734706416481059948
 MonoBehaviour:
