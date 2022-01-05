@@ -57,6 +57,10 @@ public class ResourceSpawner : MonoBehaviour
     {
         SpawnNodes(resourceNodesAmount);
         UpdateNodes();
+        if(!GameManager.instance.respawnResources)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void SpawnNodes(int amount)

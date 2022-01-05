@@ -10,8 +10,8 @@ public class WeaponData : ScriptableObject
     public string weaponName => _weaponName;
 
     [SerializeField]
-    private Mesh _mesh;
-    public Mesh mesh => _mesh;
+    private GameObject _GFX;
+    public GameObject GFX => _GFX;
 
     [SerializeField]
     private bool _hasAltFire;
@@ -47,6 +47,10 @@ public class WeaponData : ScriptableObject
     private float _mainAttackSpeed = 1;
     public float mainAttackSpeed => _mainAttackSpeed;
 
+    [SerializeField]
+    float _mainRange = 40;
+    public float mainRange => _mainRange;
+
     //Proyectile fire settings
     [SerializeField]
     private GameObject _mainProyectile;
@@ -64,16 +68,16 @@ public class WeaponData : ScriptableObject
     [Header("Main fire ResourceGather settings")]
 
     [SerializeField]
-    private Resource_Type _mainCanGather = Resource_Type.None;
-    public Resource_Type mainCanGather => _mainCanGather;
+    private Resource_Type _mainResType = Resource_Type.None;
+    public Resource_Type mainResType => _mainResType;
 
     [SerializeField]
-    private int _mainGathersUpToResourceTier = 0;
-    public int mainGathersUpToResourceTier => _mainGathersUpToResourceTier;
+    private int _mainResTier = 0;
+    public int mainResTier => _mainResTier;
 
     [SerializeField]
-    private int _mainDamageToResources = 1;
-    public int mainDamageToResources => _mainDamageToResources;
+    private int _mainResDmg = 1;
+    public int mainResDmg => _mainResDmg;
 
     [Header("Alt fire")]
 
@@ -93,6 +97,10 @@ public class WeaponData : ScriptableObject
     private float _altAttackSpeed = 1;
     public float altAttackSpeed => _altAttackSpeed;
 
+    [SerializeField]
+    float _altRange = 40;
+    public float altRange => _altRange;
+
     //Proyectile fire settings
     [SerializeField]
     private GameObject _altProyectile;
@@ -110,22 +118,15 @@ public class WeaponData : ScriptableObject
     [Header("Alt fire ResourceGather settings")]
 
     [SerializeField]
-    private Resource_Type _altCanGather = Resource_Type.None;
-    public Resource_Type altCanGather => _altCanGather;
+    private Resource_Type _altResType = Resource_Type.None;
+    public Resource_Type altResType => _altResType;
 
     [SerializeField]
-    private int _altGathersUpToResourceTier = 0;
-    public int altGathersUpToResourceTier => _altGathersUpToResourceTier;
+    private int _altResTier = 0;
+    public int altResTier => _altResTier;
 
     [SerializeField]
-    private int _altDamageToResources = 1;
-    public int altDamageToResources => _altDamageToResources;
+    private int _altResDmg = 1;
+    public int altResDmg => _altResDmg;
 }
 
-/// <summary>
-/// Also holds tool gathering settings
-/// </summary>
-public enum Resource_Type
-{
-    Wood,Mineral,Gold,Special,All,None
-}

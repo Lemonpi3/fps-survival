@@ -133,12 +133,12 @@ public class Player : Charecter
 
             if (Input.GetButton("Fire1"))
             {
-                weapons[currentWeapon].Shoot(cam);
+                weapons[currentWeapon].ShootMain(cam,team);
             }
 
             if (Input.GetButton("Fire2"))
             {
-                weapons[currentWeapon].Shoot(cam, true);
+                weapons[currentWeapon].ShootAlt(cam,team);
             }
 
             if (Input.GetKeyDown(KeyCode.R))

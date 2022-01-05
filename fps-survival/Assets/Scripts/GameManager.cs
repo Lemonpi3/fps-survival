@@ -22,6 +22,15 @@ public class GameManager : NetworkBehaviour
     public bool isSurvival;
     [SerializeField] int daysToSurvive = 5;
 
+    [SerializeField] bool _respawnResources = true;
+    public bool respawnResources => _respawnResources;
+
+    [SerializeField] Transform _proyectilesParent;
+    public Transform proyectilesParent => _proyectilesParent;
+
+    [SerializeField] float _stoppedProyectileLife = 5;
+    public float stoppedProyectileLife => _stoppedProyectileLife;
+
     [Header("Enemies Spawn")]
     public List<EnemySpawner> enemySpawners = new List<EnemySpawner>();
     public List<EnemyData> allEnemiesData = new List<EnemyData>();
@@ -83,6 +92,7 @@ public class GameManager : NetworkBehaviour
     public int maxVillagerCount = 10;
     public GameObject villagerPrefab;
     public Transform villagerSpawnPoint;
+    public Transform wildVillagersParent;
 
     public List<Villager> wildVillagers;
     public List<Villager> team1Villagers;
@@ -156,7 +166,10 @@ public class GameManager : NetworkBehaviour
             RespawnVillagers();
             CheckTeamsVillagersFullness();
         }
-        ResourceSpawner.instance.UpdateNodes();
+        if(respawnResources)
+        {
+            ResourceSpawner.instance.UpdateNodes();
+        }
     }
 
     public void CheckTeamsVillagersFullness()
@@ -229,7 +242,7 @@ public class GameManager : NetworkBehaviour
         {
             for (int i = 0; i < maxVillagerCount-villagersTotal; i++)
             {
-                Instantiate(villagerPrefab, villagerSpawnPoint.position, Quaternion.identity, villagerSpawnPoint).GetComponent<Villager>();
+                Instantiate(villagerPrefab, villagerSpawnPoint.position, Quaternion.identity, wildVillagersParent).GetComponent<Villager>();
             }
         }
     }

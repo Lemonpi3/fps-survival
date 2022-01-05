@@ -50,4 +50,5 @@ public class ResourceNode : MonoBehaviour
             Debug.Log("Tool Cant Gather: " + gameObject.name + " T" + resourceTier + " resourceType: " + resource_Type);
         return null;
     }
+
 }

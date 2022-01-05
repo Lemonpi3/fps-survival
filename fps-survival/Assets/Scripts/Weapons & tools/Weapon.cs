@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Note: Proyectile Spawnpoints have to be on the GFX GO as MainProyectileSpawPoint and AltProyectileSpawPoint.
+
 public class Weapon : MonoBehaviour
 {
     [SerializeField]
     private WeaponData _weapon;
-
-    [SerializeField]
-    private Transform bulletSpawnPoint;
-
+    [SerializeField] GameObject GFX;
     private bool hasAltFire;
     private bool infiniteAmmo;
 
@@ -18,36 +17,29 @@ public class Weapon : MonoBehaviour
     private float reloadTime;
 
     //Main fire stats
-    private int mainDamage;
     private float mainAttackSpeed;
 
     private bool isMainLaser;
+    private Transform mainProyectileSpawnPoint;
     private GameObject mainProyectile;
-    private float mainProyectileSpeed;
     private LayerMask mainAttackMask;
     
-    private Resource_Type mainGatherType;
-    private int mainGatherTier;
-    private int mainDamageToResource;
     private float mainFireTimer;
 
     //Alt fire stats
-    private int altDamage;
     private float altAttackSpeed;
 
     private bool isAltLaser;
+    private Transform altProyectileSpawnPoint;
     private GameObject altProyectile;
-    private float altProyectileSpeed;
     private LayerMask altAttackMask;
     
-    private Resource_Type altGatherType;
-    private int altGatherTier;
-    private int altDamageToResource;
     private float altFireTimer;
 
     bool shootingMain;
     bool shootingAlt;
     bool reloading;
+
 
     private void Start()
     {
@@ -82,82 +74,45 @@ public class Weapon : MonoBehaviour
             reloading = true;
         }
     }
-    public void Shoot(Camera cam,bool altFire = false)
+
+    public void ShootMain(Camera cam, Team team)
     {
-        if(currentAmmo <= 0)
+        if (currentAmmo <= 0 && !infiniteAmmo || shootingMain == true) { return; }
+
+        shootingMain = true;
+
+        if (mainFireTimer <= 0)
         {
-            return;
-        }
+            currentAmmo -= 1;
 
-        RaycastHit _hit;
+            Proyectile proyectile = Instantiate(mainProyectile, mainProyectileSpawnPoint.position, Quaternion.identity, GameManager.instance.proyectilesParent).GetComponent<Proyectile>();
 
-        if (!altFire)
-        {
-            shootingMain = true;
-
-            if (mainFireTimer <= 0)
-            {
-                currentAmmo -= 1;
-                
-                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, mainAttackMask))
-                {
-                    if (_hit.collider.tag != gameObject.tag)
-                    {
-                        DamageTarget(_hit.collider);
-                    }
-                }
-                mainFireTimer = mainAttackSpeed;
-            }
-        }
-        else
-        {
-            shootingAlt = true;
-
-            if (altFireTimer <= 0)
-            {
-                currentAmmo -= 1;
-
-                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, altAttackMask))
-                {
-                    DamageTarget(_hit.collider, true);
-                }
-                altFireTimer = altAttackSpeed;
-            }
+            proyectile.InitializeProyectile(_weapon.mainDamage, _weapon.mainRange, team,cam.transform, _weapon.mainProyectileSpeed, _weapon.mainResDmg,
+                                                    _weapon.mainResTier, _weapon.mainResType);
+            mainFireTimer = mainAttackSpeed;
         }
     }
 
-    private void DamageTarget(Collider target,bool altfire = false)
+    public void ShootAlt(Camera cam,Team team)
     {
-        Charecter _target = target.GetComponent<Charecter>();
+        if (currentAmmo <= 0 && !infiniteAmmo || shootingAlt == true) { return; }
 
-        if (!altfire)
-        {
-            if (target.tag != "Resource" && _target != null)
-            {
-                Debug.Log(mainDamage);
-                    
-                _target.TakeDamage(mainDamage);
-                    
-            }
-            else if(target.tag == "Resource")
-            {
-                Debug.Log(target.GetComponent<ResourceNode>().GatherResource(mainGatherType, mainGatherTier, mainDamageToResource));
-            }
-        }
-        else
-        {
-            if (target.tag != "Resource" && _target != null)
-            {
-                _target.TakeDamage(altDamage);
-            }
+        if(!hasAltFire) { return; } //cancels if weapon doesnt have alt fire
 
-            else if (target.tag == "Resource")
-            {
-                Debug.Log(target.GetComponent<ResourceNode>().GatherResource(altGatherType, altGatherTier, altDamageToResource));
-            }
+        shootingAlt = true;
+
+        if (altFireTimer <= 0)
+        {
+            currentAmmo -= 1;
+
+            Proyectile proyectile = Instantiate(altProyectile, altProyectileSpawnPoint.position, Quaternion.identity, transform).GetComponent<Proyectile>();
+
+            proyectile.InitializeProyectile(_weapon.altDamage, _weapon.altRange, team, cam.transform, _weapon.altProyectileSpeed, _weapon.altResDmg,
+                                                    _weapon.altResTier, _weapon.altResType);
+
+            altFireTimer = altAttackSpeed;
         }
     }
-
 
     public IEnumerator Reload()
     {
@@ -172,58 +127,54 @@ public class Weapon : MonoBehaviour
     {
         if(_weapon == null) { return; }
 
+        GFX = Instantiate(_weapon.GFX,transform.position,Quaternion.identity,transform);
+        //ammo setup
         infiniteAmmo = !_weapon.usesAmmo;
+
         if (!infiniteAmmo)
         {
             ammoCapacity = _weapon.ammoCapacity;
             currentAmmo = ammoCapacity;
             reloadTime = _weapon.reloadTime;
         }
+
         //main fire setup
-        mainDamage = _weapon.mainDamage;
+        mainProyectileSpawnPoint = GFX.transform.Find("MainProyectileSpawPoint");
         mainAttackSpeed = _weapon.mainAttackSpeed;
         mainAttackMask = _weapon.mainAttackMask;
-        mainGatherType = _weapon.mainCanGather;
-        mainGatherTier = _weapon.mainGathersUpToResourceTier;
-        mainDamageToResource = _weapon.mainDamageToResources;
-
         isMainLaser = _weapon.isMainLaser;
 
         if (!_weapon.isMainLaser)
         {
-            mainProyectile = _weapon.mainProyectile;
-            mainProyectileSpeed = _weapon.mainProyectileSpeed;
-        } else 
+            mainProyectile = _weapon.mainProyectile; //SetsUpProyectile
+        } 
+        else 
         { 
-            mainProyectile = Instantiate(_weapon.mainLaser,bulletSpawnPoint.position,Quaternion.identity,transform); 
+            mainProyectile = Instantiate(_weapon.mainLaser,mainProyectileSpawnPoint.position,Quaternion.identity,transform);  //SetsUpLaser
+            mainProyectile.SetActive(false);
         }
 
         //alt fire setup
-
-        hasAltFire = _weapon.hasAltFire;
-       
-        if (hasAltFire)
+        if (_weapon.hasAltFire)
         {
-            altDamage = _weapon.altDamage;
+            hasAltFire = _weapon.hasAltFire;
+            altProyectileSpawnPoint = GFX.transform.Find("AltProyectileSpawPoint");
             altAttackSpeed = _weapon.altAttackSpeed;
             altAttackMask = _weapon.altAttackMask;
-            altGatherType = _weapon.altCanGather;
-            altGatherTier = _weapon.altGathersUpToResourceTier;
-            altDamageToResource = _weapon.altDamageToResources;
-
             isAltLaser = _weapon.isAltLaser;
 
-            if (!_weapon.isMainLaser)
+            if (!_weapon.isAltLaser)
             {
-                altProyectile = _weapon.altProyectile;
-                altProyectileSpeed = _weapon.altProyectileSpeed;
+                altProyectile = _weapon.altProyectile;  //SetsUpProyectile
             }
             else 
-            { 
-                altProyectile = Instantiate(_weapon.altLaser, bulletSpawnPoint.position, Quaternion.identity, transform); 
+            {
+                altProyectile = Instantiate(_weapon.altLaser, altProyectileSpawnPoint.position, Quaternion.identity, transform);  //SetsUpLaser
+                altProyectile.SetActive(false);
             }
         }
     }
+
     /// <summary>
     /// Replaces current weapon with a new one
     /// </summary>

@@ -36,3 +36,10 @@ public class Resource : Item
     float _maxWidthScaleVariation = 0;
     public float maxWidthScaleVariation => _maxWidthScaleVariation;
 }
+/// <summary>
+/// Also holds tool gathering settings
+/// </summary>
+public enum Resource_Type
+{
+    Wood, Mineral, Gold, Special, All, None
+}

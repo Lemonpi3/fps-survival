@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4be536fa44433e4da22735633ccbafd, type: 3}
+  m_Name: StartingWeapon
+  m_EditorClassIdentifier: 
+  _weaponName: MultyTool
+  _GFX: {fileID: 6856143547792101481, guid: 5255438cf5261f3488d07a0d78711743, type: 3}
+  _hasAltFire: 1
+  _usesAmmo: 1
+  _ammoCapacity: 2
+  _reloadTime: 2
+  _mainAttackMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _isMainLaser: 0
+  _mainDamage: 1
+  _mainAttackSpeed: 1
+  _mainRange: 40
+  _mainProyectile: {fileID: 0}
+  _mainProyectileSpeed: 10
+  _mainLaser: {fileID: 0}
+  _mainResType: 5
+  _mainResTier: 0
+  _mainResDmg: 1
+  _altAttackMask:
+    serializedVersion: 2
+    m_Bits: 256
+  _isAltLaser: 0
+  _altDamage: 1
+  _altAttackSpeed: 1
+  _altRange: 40
+  _altProyectile: {fileID: 0}
+  _altProyectileSpeed: 0
+  _altLaser: {fileID: 0}
+  _altResType: 5
+  _altResTier: 0
+  _altResDmg: 1

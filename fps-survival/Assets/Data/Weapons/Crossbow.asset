@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4be536fa44433e4da22735633ccbafd, type: 3}
+  m_Name: Crossbow
+  m_EditorClassIdentifier: 
+  _weaponName: Crossbow
+  _GFX: {fileID: 1343802733027065140, guid: e6865b3e578f15a4893d110b08ef18e3, type: 3}
+  _hasAltFire: 0
+  _usesAmmo: 1
+  _ammoCapacity: 1
+  _reloadTime: 1
+  _mainAttackMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _isMainLaser: 0
+  _mainDamage: 10
+  _mainAttackSpeed: 1
+  _mainRange: 40
+  _mainProyectile: {fileID: 6891576679569951132, guid: c6a42fc7571c57a4d97ed4ee1807665a, type: 3}
+  _mainProyectileSpeed: 1500
+  _mainLaser: {fileID: 0}
+  _mainResType: 5
+  _mainResTier: 0
+  _mainResDmg: 1
+  _altAttackMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _isAltLaser: 0
+  _altDamage: 1
+  _altAttackSpeed: 1
+  _altRange: 40
+  _altProyectile: {fileID: 0}
+  _altProyectileSpeed: 0
+  _altLaser: {fileID: 0}
+  _altResType: 5
+  _altResTier: 0
+  _altResDmg: 1
